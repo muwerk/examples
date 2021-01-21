@@ -6,7 +6,7 @@
 
 #include "console.h"
 #include "led.h"
-//#include "switch.h"
+#include "switch.h"
 
 void appLoop();
 
@@ -21,6 +21,9 @@ ustd::Led led2("myLed2", 27, false, 1);
 ustd::Led led3("myLed3", 33, false, 2);
 ustd::Led led4("myLed4", 15, false, 3);
 
+ustd::Switch switch1("mySwitch1", 32, ustd::Switch::Mode::Flipflop);
+ustd::Switch switch2("mySwitch2", 14, ustd::Switch::Mode::Flipflop);
+
 void setup() {
 #ifdef USE_SERIAL_DBG
     Serial.begin(115200);
@@ -34,6 +37,9 @@ void setup() {
     led2.begin(&sched);
     led3.begin(&sched);
     led4.begin(&sched);
+
+    switch1.begin(&sched);
+    switch2.begin(&sched);
 
     // generate software phase
     led1.setMode(ustd::Led::Mode::Wave, 2000, 0.0);

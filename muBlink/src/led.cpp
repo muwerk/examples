@@ -32,13 +32,14 @@ void setup() {
     led1.begin(&sched);
     led2.begin(&sched);
     led3.begin(&sched);
-    //    toggleswitch.begin(&sched);
 
-    led1.setMode(ustd::Led::Mode::Wave, 1000, 0.0);
-    led2.setMode(ustd::Led::Mode::Wave, 1000, 0.5);
-    led3.setMode(ustd::Led::Mode::Blink, 500);
-
-    // sched.subscribe(tID, "mySwitch/switch/state", switch_messages);
+    // generate software phase
+    led1.setMode(ustd::Led::Mode::Wave, 2000, 0.0);
+    led1.setMinMaxWaveBrightness(0.02, 0.3);
+    led2.setMode(ustd::Led::Mode::Wave, 2000, 0.5);
+    led2.setMinMaxWaveBrightness(0.02, 0.3);
+    led3.setMode(ustd::Led::Mode::Wave, 500, 0.0);
+    led3.setMinMaxWaveBrightness(0.02, 0.3);
 }
 
 void appLoop() {

@@ -1,10 +1,10 @@
-Led example
-===========
+Switch and Led example
+======================
 
-A simple example demonstrating muwerk's scheduler, munet interface to WLAN, NTP, OTA and MQTT, and simple a led.
+A simple example demonstrating muwerk's scheduler, munet interface to WLAN, NTP, OTA and MQTT, with led and switches.
 
-<img src="https://github.com/muwerk/mupplet-core/blob/master/extras/led.png" width="50%" height="30%">
-Hardware: D1 mini ESP8266, 330Ω resistor, led.
+<img src="https://github.com/muwerk/mupplet-core/blob/master/extras/switch.png" width="50%" height="30%">
+Hardware: D1 mini ESP8266, 330Ω resistor, leds, buttons.
 
 ## Building with platformio
 

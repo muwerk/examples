@@ -42,13 +42,13 @@ void setup() {
     switch2.begin(&sched);
 
     // generate software phase
-    led1.setMode(ustd::Led::Mode::Wave, 2000, 0.0);
+    led1.setMode(ustd::Led::Mode::Wave, 500, 0.0);
     // led1.setMinMaxWaveBrightness(0.02, 0.3);
-    led2.setMode(ustd::Led::Mode::Wave, 2000, 0.5);
+    led2.setMode(ustd::Led::Mode::Wave, 500, 0.25);
     // led2.setMinMaxWaveBrightness(0.02, 0.3);
-    led3.setMode(ustd::Led::Mode::Wave, 500, 0.0);
+    led3.setMode(ustd::Led::Mode::Wave, 500, 0.5);
     // led3.setMinMaxWaveBrightness(0.02, 0.3);
-    led4.setMode(ustd::Led::Mode::Wave, 500, 0.5);
+    led4.setMode(ustd::Led::Mode::Wave, 500, 0.75);
     // led4.setMinMaxWaveBrightness(0.02, 0.3);
 }
 

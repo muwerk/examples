@@ -5,5 +5,6 @@ Complete examples using muwerk's ustd, muwerk, munet, and mupplet-core libraries
 
 The following examples are available
 
-* [muBlink](https://github.com/muwerk/examples/tree/master/muBlink) A simple demonstration of blinking multiple synchronized leds.
+* [muBlink](https://github.com/muwerk/examples/tree/master/muBlink) A simple demonstration of blinking multiple synchronized leds with Esp8266.
 
+* [SwitchAndLed](https://github.com/muwerk/examples/tree/master/muBlink) Buttons and Leds with ESP32.

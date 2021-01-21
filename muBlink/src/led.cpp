@@ -16,38 +16,9 @@ ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
 
-#ifdef __ESP32__
-ustd::Led led("myLed", 14, false, 0);
-// ustd::Switch toggleswitch("mySwitch",32, ustd::Switch::Mode::Default, false);
-// Optional IRQ support: (each switch needs unique interruptIndex [0..9])
-// ustd::Switch toggleswitch("mySwitch", 32, ustd::Switch::Mode::Flipflop, false,
-//                          "mySwitch/switch/IRQ/0", 0, 25);
-#else
-ustd::Led led("myLed", D5, false);
-// ustd::Switch toggleswitch("mySwitch", D6, ustd::Switch::Mode::Default, false);
-// Optional IRQ support: (each switch needs unique interruptIndex [0..9])
-// ustd::Switch toggleswitch("mySwitch",D6, ustd::Switch::Mode::Flipflop, false,
-// "mySwitch/switch/IRQ/0", 0, 25);
-#endif
-
-/*
-void switch_messages(String topic, String msg, String originator) {
-#ifdef USE_SERIAL_DBG
-    Serial.println("Switch received: " + topic + "|" + msg);
-#endif
-    if (topic == "mySwitch/switch/state") {
-        if (msg == "on") {
-            led.set(true);
-            // sched.publish("myLed/light/set","on");
-        } else if (msg == "off") {
-            led.set(false);
-            // sched.publish("myLed/light/set","off");
-        } else if (msg == "trigger") {
-            led.setMode(ustd::Led::Mode::Pulse, 50);
-        }
-    }
-}
-*/
+ustd::Led led1("myLed1", D5, false);
+ustd::Led led2("myLed2", D6, false);
+ustd::Led led3("myLed3", D7, false);
 
 void setup() {
 #ifdef USE_SERIAL_DBG
@@ -58,10 +29,15 @@ void setup() {
     mqtt.begin(&sched);
     ota.begin(&sched);
     /*int tID = */ sched.add(appLoop, "main", 1000000);
-    led.begin(&sched);
+    led1.begin(&sched);
+    led2.begin(&sched);
+    led3.begin(&sched);
     //    toggleswitch.begin(&sched);
 
-    led.setMode(led.Mode::Wave, 1000);
+    led1.setMode(ustd::Led::Mode::Wave, 1000, 0.0);
+    led2.setMode(ustd::Led::Mode::Wave, 1000, 0.5);
+    led3.setMode(ustd::Led::Mode::Blink, 500);
+
     // sched.subscribe(tID, "mySwitch/switch/state", switch_messages);
 }
 

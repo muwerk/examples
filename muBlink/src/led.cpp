@@ -55,6 +55,11 @@ ustd::DigitalOut led1("L1", 0, true);  // Pin next to Vcc
 ustd::DigitalOut led2("L2", 1, true);  // Pin 2nd next to Vcc
 #endif
 
+#ifdef __STM32__
+ustd::Led led1("myLed1", 10, true);  // Pin next to Vcc
+ustd::Led led2("myLed2", 12, true);  // Pin 2nd next to Vcc
+#endif
+
 void setup() {
 #if USTD_FEATURE_MEMORY >= USTD_FEATURE_MEM_8K
     Serial.begin(115200);

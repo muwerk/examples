@@ -55,9 +55,14 @@ ustd::DigitalOut led1("L1", 0, true);  // Pin next to Vcc
 ustd::DigitalOut led2("L2", 1, true);  // Pin 2nd next to Vcc
 #endif
 
-#ifdef __STM32__
-ustd::Led led1("myLed1", 10, true);  // Pin next to Vcc
-ustd::Led led2("myLed2", 12, true);  // Pin 2nd next to Vcc
+#ifdef __ARM__
+ustd::Led led1("myLed1", 10, true);
+ustd::Led led2("myLed2", 12, true);
+#endif
+
+#ifdef __RISC_V__
+ustd::Led led1("myLed1", 4, true);
+ustd::Led led2("myLed2", 2, true);
 #endif
 
 void setup() {

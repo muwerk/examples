@@ -66,8 +66,8 @@ ustd::Led led2("myLed2", 2, true);
 #endif
 
 #ifdef __FEATHER_M0__
-ustd::Led led1("myLed1", 24, true);
-ustd::Led led2("myLed2", 22, true);
+ustd::Led led1("myLed1", 18, true);  // A2
+ustd::Led led2("myLed2", 16, true);  // A4
 #endif
 
 #ifdef __NRF52__

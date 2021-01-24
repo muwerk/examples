@@ -55,14 +55,24 @@ ustd::DigitalOut led1("L1", 0, true);  // Pin next to Vcc
 ustd::DigitalOut led2("L2", 1, true);  // Pin 2nd next to Vcc
 #endif
 
-#ifdef __ARM__
+#ifdef __BLUEPILL__
 ustd::Led led1("myLed1", 10, true);
 ustd::Led led2("myLed2", 12, true);
 #endif
 
-#ifdef __RISC_V__
+#ifdef __MAIXBIT__
 ustd::Led led1("myLed1", 4, true);
 ustd::Led led2("myLed2", 2, true);
+#endif
+
+#ifdef __FEATHER_M0__
+ustd::Led led1("myLed1", 24, true);
+ustd::Led led2("myLed2", 22, true);
+#endif
+
+#ifdef __NRF52__
+ustd::Led led1("myLed1", 14, true);
+ustd::Led led2("myLed2", 12, true);
 #endif
 
 void setup() {

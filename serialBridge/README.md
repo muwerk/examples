@@ -27,7 +27,7 @@ can publish and subscribe to MQTT, all message synchronisation is handled automa
 Let's assume the ESP has hostname `bridge-test` and the name of the serial link given to the Arduino is `arduino`.
 The led is named `l1` and the switch is named `s1` during mupplet instantiation (see code).
 
-## MQTT messages.
+## MQTT messages
 
 Let's switch on the Arduino's Led using MQTT:
 

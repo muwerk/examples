@@ -32,7 +32,7 @@ The led is named `l1` and the switch is named `s1` during mupplet instantiation 
 Let's switch on the Arduino's Led using MQTT:
 
 ```
-mosquitto_pub -h <mqtt-server-hostname> -t bridge-test/11/light/set -m on
+mosquitto_pub -h <mqtt-server-hostname> -t bridge-test/l1/light/set -m on
 ```
 
 The led on the Arduino goes on!
@@ -45,7 +45,7 @@ mosquitto_sub -h <mqtt-server-hostname> -v -t omu/bridge-test/#
 
 Sending a led command again (from a second terminal) shows:
 ```
-omu/bridge-test/L1/light/set on
+omu/bridge-test/l1/light/set on
 omu/bridge-test/l1/light/unitbrightness 1.0
 omu/bridge-test/l1/light/state on
 ```

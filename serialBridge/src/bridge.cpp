@@ -3,10 +3,16 @@
 
 #include "muserial.h"
 #include "console.h"
+
 #ifdef __ESP__
 #include "net.h"
 #include "mqtt.h"
 #include "ota.h"
+#endif
+
+#ifdef __ARDUINO__
+#include "led.h"
+#include "switch.h"
 #endif
 
 void appLoop();
@@ -32,6 +38,11 @@ ustd::Mqtt mqtt;
 ustd::Ota ota;
 #endif
 
+#ifdef __ARDUINO__
+ustd::Led led("l1", 2, true);
+ustd::Switch switch1("s1", 3);
+#endif
+
 void setup() {
     // The Console is connected on both Arduino and ESP32 to default Serial-over-USB:
     Serial.begin(115200);
@@ -42,6 +53,10 @@ void setup() {
     net.begin(&sched);
     mqtt.begin(&sched);
     ota.begin(&sched);
+#endif
+#ifdef __ARDUINO__
+    led.begin(&sched);
+    switch1.begin(&sched);
 #endif
     sched.add(appLoop, "main", 1000000);
 }

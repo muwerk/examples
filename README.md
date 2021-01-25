@@ -14,8 +14,8 @@ The following examples are available
 
 <img src="https://github.com/muwerk/mupplet-core/blob/master/extras/switch.png" width="10%" height="10%">
 
-* [SwitchAndLed](https://github.com/muwerk/examples/tree/master/muBlink) Buttons and Leds with ESP32.
+* [SwitchAndLed](https://github.com/muwerk/examples/tree/master/SwitchAndLed) Buttons and Leds with ESP32.
 
 <img src="https://github.com/muwerk/examples/blob/master/Resources/SerialBridge.jpg" width="10%" height="10%">
 
-* [SerialBridge](https://github.com/muwerk/examples/tree/master/muBlink) MQTT-over-serial: Arduino Mega 2560 gets MQTT access via ESP32.
+* [SerialBridge](https://github.com/muwerk/examples/tree/master/SerialBridge) MQTT-over-serial: Arduino Mega 2560 gets MQTT access via ESP32.

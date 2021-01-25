@@ -18,4 +18,4 @@ The following examples are available
 
 <img src="https://github.com/muwerk/examples/blob/master/Resources/SerialBridge.jpg" width="20%">
 
-* [SerialBridge](https://github.com/muwerk/examples/tree/master/SerialBridge) MQTT-over-serial: Arduino Mega 2560 gets MQTT access via ESP32.
+* [SerialBridge](https://github.com/muwerk/examples/tree/master/serialBridge) MQTT-over-serial: Arduino Mega 2560 gets MQTT access via ESP32.

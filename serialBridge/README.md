@@ -12,7 +12,7 @@ Hardware: Adafruit Feather32 ESP32, 5V <-> 3.3V logic level shifter, Arduino Meg
 button.
 
 The MCUs used are just examples, you can of course use different modules. Just adapt `platform.ini` and the
-platform defines in `src/switch.cpp` accordingly.
+platform defines in `src/bridge.cpp` accordingly.
 
 ## System description
 

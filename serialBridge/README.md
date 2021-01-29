@@ -1,8 +1,6 @@
 SerialBridge example
 ====================
 
-**Note:** The `muserial` protocol is not released and under heavy modification.
-
 The muwerk serial protocol uses the `munet` `muserial.h` module to make MQTT available to devices that are
 not networked using a serial bridge.
 

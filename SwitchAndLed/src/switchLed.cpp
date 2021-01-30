@@ -1,12 +1,12 @@
-#include "platform.h"
+#include "ustd_platform.h"
 #include "scheduler.h"
 #include "net.h"
 #include "mqtt.h"
 #include "ota.h"
 
 #include "console.h"
-#include "led.h"
-#include "switch.h"
+#include "mup_led.h"
+#include "mup_switch.h"
 
 void appLoop();
 

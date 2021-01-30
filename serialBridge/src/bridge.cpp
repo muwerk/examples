@@ -1,4 +1,4 @@
-#include "platform.h"
+#include "ustd_platform.h"
 #include "scheduler.h"
 
 #include "muserial.h"
@@ -11,8 +11,8 @@
 #endif
 
 #ifdef __ARDUINO__
-#include "led.h"
-#include "switch.h"
+#include "mup_led.h"
+#include "mup_switch.h"
 #endif
 
 void appLoop();

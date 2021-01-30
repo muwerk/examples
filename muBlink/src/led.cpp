@@ -1,4 +1,4 @@
-#include "platform.h"
+#include "ustd_platform.h"
 #include "scheduler.h"
 
 #ifdef USD_FEATURE_NET
@@ -14,7 +14,7 @@
 #if USTD_FEATURE_MEMORY < USTD_FEATURE_MEM_2K
 #include "digital_out.h"
 #else
-#include "led.h"
+#include "mup_led.h"
 #endif
 
 void appLoop();

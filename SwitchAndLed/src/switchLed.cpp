@@ -5,7 +5,7 @@
 #include "ota.h"
 
 #include "console.h"
-#include "mup_led.h"
+#include "light_led_gpio.h"
 #include "mup_switch.h"
 
 void appLoop();
@@ -16,10 +16,10 @@ ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
 
-ustd::Led led1("myLed1", 12, false, 0);
-ustd::Led led2("myLed2", 27, false, 1);
-ustd::Led led3("myLed3", 33, false, 2);
-ustd::Led led4("myLed4", 15, false, 3);
+ustd::LightLedGPIO led1("myLed1", 12, false, 0);
+ustd::LightLedGPIO led2("myLed2", 27, false, 1);
+ustd::LightLedGPIO led3("myLed3", 33, false, 2);
+ustd::LightLedGPIO led4("myLed4", 15, false, 3);
 
 ustd::Switch switch1("mySwitch1", 32, ustd::Switch::Mode::Flipflop);
 ustd::Switch switch2("mySwitch2", 14, ustd::Switch::Mode::Flipflop);
@@ -42,13 +42,13 @@ void setup() {
     switch2.begin(&sched);
 
     // generate software phase
-    led1.setMode(ustd::Led::Mode::Wave, 500, 0.0);
+    led1.setMode(ustd::LightController::Mode::Wave, 500, 0.0);
     // led1.setMinMaxWaveBrightness(0.02, 0.3);
-    led2.setMode(ustd::Led::Mode::Wave, 500, 0.25);
+    led2.setMode(ustd::LightController::Mode::Wave, 500, 0.25);
     // led2.setMinMaxWaveBrightness(0.02, 0.3);
-    led3.setMode(ustd::Led::Mode::Wave, 500, 0.5);
+    led3.setMode(ustd::LightController::Mode::Wave, 500, 0.5);
     // led3.setMinMaxWaveBrightness(0.02, 0.3);
-    led4.setMode(ustd::Led::Mode::Wave, 500, 0.75);
+    led4.setMode(ustd::LightController::Mode::Wave, 500, 0.75);
     // led4.setMinMaxWaveBrightness(0.02, 0.3);
 }
 

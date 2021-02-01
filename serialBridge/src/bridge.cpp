@@ -11,7 +11,7 @@
 #endif
 
 #ifdef __ARDUINO__
-#include "mup_led.h"
+#include "light_led_gpio.h"
 #include "mup_switch.h"
 #endif
 
@@ -39,7 +39,7 @@ ustd::Ota ota;
 #endif
 
 #ifdef __ARDUINO__
-ustd::Led led("l1", 2, true);
+ustd::LightLedGPIO led("l1", 2, true);
 ustd::Switch switch1("s1", 3);
 #endif
 

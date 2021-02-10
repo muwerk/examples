@@ -1,0 +1,15 @@
+{
+    "host": "192.168.107.1",
+    "port": 1884,
+    "user": "",
+    "password": "",
+    "clientName": "${hostname}",
+    "domainToken": "mu",
+    "outDomainToken": "omu",
+    "lastWillTopic": "",
+    "lastWillMessage": "",
+    "subscriptions": [],
+    "retained": [],
+    "outgoingBlackList": [],
+    "incomingBlackList": []
+}

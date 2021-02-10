@@ -5,8 +5,8 @@
 #include "ota.h"
 
 #include "console.h"
-#include "light_led_gpio.h"
-#include "mup_switch.h"
+#include "light_gpio.h"
+#include "switch_gpio.h"
 
 void appLoop();
 
@@ -16,13 +16,13 @@ ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
 
-ustd::LightLedGPIO led1("myLed1", 12, false, 0);
-ustd::LightLedGPIO led2("myLed2", 27, false, 1);
-ustd::LightLedGPIO led3("myLed3", 33, false, 2);
-ustd::LightLedGPIO led4("myLed4", 15, false, 3);
+ustd::LightGPIO led1("myLed1", 12, false, 0);
+ustd::LightGPIO led2("myLed2", 27, false, 1);
+ustd::LightGPIO led3("myLed3", 33, false, 2);
+ustd::LightGPIO led4("myLed4", 15, false, 3);
 
-ustd::Switch switch1("mySwitch1", 32, ustd::Switch::Mode::Flipflop);
-ustd::Switch switch2("mySwitch2", 14, ustd::Switch::Mode::Flipflop);
+ustd::SwitchGPIO switch1("mySwitch1", 32, ustd::SwitchGPIO::Mode::Flipflop);
+ustd::SwitchGPIO switch2("mySwitch2", 14, ustd::SwitchGPIO::Mode::Flipflop);
 
 void setup() {
 #ifdef USE_SERIAL_DBG

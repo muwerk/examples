@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "mode": "station",
+    "hostname": "muwerk-${macls}",
+    "station": {
+        "SSID": "my-network-SSID",
+        "password": "myS3cr3t",
+        "address": "",
+        "netmask": "",
+        "gateway": "",
+        "maxRetries": 40,
+        "connectTimeout": 15,
+        "rebootonFailure": true
+    },
+    "ap": {
+        "SSID": "muwerk-${macls}",
+        "password": "",
+        "address": "",
+        "netmask": "",
+        "gateway": "",
+        "channel": 1,
+        "hidden": false
+    },
+    "services": {
+        "dns": {
+            "host": []
+        },
+        "ntp": {
+            "host": [
+                "time.nist.gov",
+                "ptbtime1.ptb.de",
+                "ptbtime2.ptb.de",
+                "ptbtime3.ptb.de"
+            ],
+            "dstrules": "CET-1CEST,M3.5.0,M10.5.0/3"
+        }
+    }
+}

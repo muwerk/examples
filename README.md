@@ -19,3 +19,7 @@ The following examples are available
 <img src="https://github.com/muwerk/examples/blob/master/Resources/SerialBridge.jpg" width="20%">
 
 * [SerialBridge](https://github.com/muwerk/examples/tree/master/serialBridge) MQTT-over-serial: Arduino Mega 2560 gets MQTT access via ESP32.
+
+<img src="https://github.com/muwerk/examples/blob/master/Resources/Matrix-8x8-MAX7219.jpg" width="14%">
+
+* [ledMatrix](https://github.com/muwerk/examples/tree/master/ledMatrix) Led matrix display example

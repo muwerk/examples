@@ -14,7 +14,7 @@
 #if USTD_FEATURE_MEMORY < USTD_FEATURE_MEM_2K
 #include "digital_out.h"
 #else
-#include "light_led_gpio.h"
+#include "light_gpio.h"
 #endif
 
 void appLoop();
@@ -36,18 +36,18 @@ ustd::Ota ota;
 #endif
 
 #if defined(__ESP__) && !defined(__ESP32__)
-ustd::LightLedGPIO led1("myLed1", D5, false);
-ustd::LightLedGPIO led2("myLed2", D6, false);
+ustd::LightGPIO led1("myLed1", D5, false);
+ustd::LightGPIO led2("myLed2", D6, false);
 #endif
 
 #ifdef __ESP32__
-ustd::LightLedGPIO led1("myLed1", 12, false);
-ustd::LightLedGPIO led2("myLed2", 27, false);
+ustd::LightGPIO led1("myLed1", 12, false);
+ustd::LightGPIO led2("myLed2", 27, false);
 #endif
 
 #ifdef __UNO__
-ustd::LightLedGPIO led1("myLed1", 3, false);
-ustd::LightLedGPIO led2("myLed2", 5, false);
+ustd::LightGPIO led1("myLed1", 3, false);
+ustd::LightGPIO led2("myLed2", 5, false);
 #endif
 
 #ifdef __ATTINY__
@@ -56,8 +56,8 @@ ustd::DigitalOut led2("L2", 1, true);  // Pin 2nd next to Vcc
 #endif
 
 #ifdef __BLUEPILL__
-ustd::LightLedGPIO led1("myLed1", 10, true);
-ustd::LightLedGPIO led2("myLed2", 12, true);
+ustd::LightGPIO led1("myLed1", 10, true);
+ustd::LightGPIO led2("myLed2", 12, true);
 #endif
 
 #ifdef __BLACKPILL__
@@ -66,18 +66,18 @@ ustd::LightLedGPIO led2("myLed2", 12, true);
 #endif
 
 #ifdef __MAIXBIT__
-ustd::LightLedGPIO led1("myLed1", 4, true);
-ustd::LightLedGPIO led2("myLed2", 2, true);
+ustd::LightGPIO led1("myLed1", 4, true);
+ustd::LightGPIO led2("myLed2", 2, true);
 #endif
 
 #ifdef __FEATHER_M0__
-ustd::LightLedGPIO led1("myLed1", 18, true);  // A2
-ustd::LightLedGPIO led2("myLed2", 16, true);  // A4
+ustd::LightGPIO led1("myLed1", 18, true);  // A2
+ustd::LightGPIO led2("myLed2", 16, true);  // A4
 #endif
 
 #ifdef __NRF52__
-ustd::LightLedGPIO led1("myLed1", 14, true);
-ustd::LightLedGPIO led2("myLed2", 12, true);
+ustd::LightGPIO led1("myLed1", 14, true);
+ustd::LightGPIO led2("myLed2", 12, true);
 #endif
 
 void setup() {

@@ -14,11 +14,11 @@ The following examples are available
 
 <img src="https://github.com/muwerk/mupplet-core/blob/master/extras/switch.png" width="20%">
 
-* [SwitchAndLed](https://github.com/muwerk/examples/tree/master/SwitchAndLed) Buttons and Leds with ESP32.
+* [switchLed](https://github.com/muwerk/examples/tree/master/switchLed) Buttons and Leds with ESP32.
 
 <img src="https://github.com/muwerk/examples/blob/master/Resources/SerialBridge.jpg" width="20%">
 
-* [SerialBridge](https://github.com/muwerk/examples/tree/master/serialBridge) MQTT-over-serial: Arduino Mega 2560 gets MQTT access via ESP32.
+* [serialBridge](https://github.com/muwerk/examples/tree/master/serialBridge) MQTT-over-serial: Arduino Mega 2560 gets MQTT access via ESP32.
 
 <img src="https://github.com/muwerk/examples/blob/master/Resources/Matrix-8x8-MAX7219.jpg" width="14%">
 

@@ -60,6 +60,11 @@ ustd::LightLedGPIO led1("myLed1", 10, true);
 ustd::LightLedGPIO led2("myLed2", 12, true);
 #endif
 
+#ifdef __BLACKPILL__
+ustd::LightLedGPIO led1("myLed1", 10, true);
+ustd::LightLedGPIO led2("myLed2", 12, true);
+#endif
+
 #ifdef __MAIXBIT__
 ustd::LightLedGPIO led1("myLed1", 4, true);
 ustd::LightLedGPIO led2("myLed2", 2, true);

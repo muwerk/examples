@@ -61,7 +61,7 @@ ustd::LightGPIO led2("myLed2", 12, true);
 #endif
 
 #ifdef __BLACKPILL__
-ustd::LightPIO led1("myLed1", 10, true);
+ustd::LightGPIO led1("myLed1", 10, true);
 ustd::LightGPIO led2("myLed2", 12, true);
 #endif
 

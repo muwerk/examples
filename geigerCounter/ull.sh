@@ -5,8 +5,8 @@ for f in .pio/libdeps/*; do
         cp -v ../../ustd/*.h $f/ustd/
         cp -v ../../muwerk/*.h $f/muwerk/
         cp -v ../../munet/*.h $f/munet/
-        cp -v ../../mupplet-core/src/*.h $f/mupplet-core/src/
-        cp -rv ../../mupplet-display/src/*.h $f/mupplet-display/src/
+        cp -av ../../mupplet-core/src $f/mupplet-core
+        cp -av ../../mupplet-display/src $f/mupplet-display
     fi
 done
 

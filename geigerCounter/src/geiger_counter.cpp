@@ -10,7 +10,7 @@
 
 #include "mup_frequency_counter.h"
 
-ustd::FrequencyCounter geiger("geiger", D3, 0,
+ustd::FrequencyCounter geiger("geiger", D2, 0,
                               ustd::FrequencyCounter::MeasureMode::LOWFREQUENCY_MEDIUM);
 
 void appLoop();

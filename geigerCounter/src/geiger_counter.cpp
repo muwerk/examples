@@ -9,9 +9,11 @@
 #include <SPI.h>
 
 #include "mup_frequency_counter.h"
+#include "display_digits_max72xx.h"
 
 ustd::FrequencyCounter geiger("geiger", D2, 0,
                               ustd::FrequencyCounter::MeasureMode::LOWFREQUENCY_MEDIUM);
+ustd::DisplayDigitsMAX72XX digits("screen", D8, 1, 1);
 
 void appLoop();
 
@@ -38,6 +40,7 @@ void setup() {
     int tID = sched.add(appLoop, "main", 100000);
 
     geiger.begin(&sched);
+    digits.begin(&sched, true);
 
 #ifdef __ESP32__
     Wire.begin();
@@ -47,7 +50,8 @@ void setup() {
 }
 
 void appLoop() {
-    String msgd = "> " + String(freq) + " Hz   ";
+    String msgd = "> " + String(freq) + " Hz";
+    sched.publish("screen/display/cmnd/printat", "0;0;8;right;"+msgd);
 }
 
 // Never add code to this loop, use appLoop() instead.

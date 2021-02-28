@@ -49,9 +49,13 @@ void setup() {
     sched.subscribe(tID, "geiger/sensor/frequency", subMsg);
 }
 
+String oldMsg="";
 void appLoop() {
-    String msgd = "> " + String(freq) + " Hz";
-    sched.publish("screen/display/cmnd/printat", "0;0;8;right;"+msgd);
+    String msgd = String(freq) + " Hz";
+    if (oldMsg != msgd) {
+        sched.publish("screen/display/cmnd/format", "0;0;8;right;"+msgd);
+        oldMsg=msgd;
+    }
 }
 
 // Never add code to this loop, use appLoop() instead.

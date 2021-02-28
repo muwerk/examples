@@ -11,7 +11,7 @@ geiger counter, 8 digit 7 segment display, Wemos D1 mini.
 ### Note on interface between geiger counter and ESP8266
 
 ⚠️ Make sure to check the signal (voltage levels) of the geiger counter output, and use some means to
-make 3.3V logic level compatible! Different geiger counters seems to output a wide variety of different
+make the signal 3.3V logic level compatible! Different geiger counters seems to output a wide variety of different
 signal levels. 
 
 This example converts the logic level of a device that outputs levels between 5V (high) and 3.8V (low) using

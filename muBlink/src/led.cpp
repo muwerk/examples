@@ -50,6 +50,11 @@ ustd::Light led1("myLed1", 3, false);
 ustd::Light led2("myLed2", 5, false);
 #endif
 
+#ifdef __ATMEGA__
+ustd::Light led1("myLed1", 3, false);
+ustd::Light led2("myLed2", 5, false);
+#endif
+
 #ifdef __ATTINY__
 ustd::DigitalOut led1("L1", 0, true);  // Pin next to Vcc
 ustd::DigitalOut led2("L2", 1, true);  // Pin 2nd next to Vcc

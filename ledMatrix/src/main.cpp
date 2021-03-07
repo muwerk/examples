@@ -11,8 +11,8 @@
 #include "doctor.h"
 #include "console.h"
 #include "display_matrix_max72xx.h"
-#include "light_gpio.h"
-#include <Fonts/Org_01.h>
+#include "muMatrix8ptRegular.h"
+#include "muHeavy8ptBold.h"
 
 // entities for core functionality
 ustd::Scheduler sched(10, 16, 32);
@@ -21,9 +21,7 @@ ustd::Doctor doc;
 ustd::Net net(LED_BUILTIN);
 ustd::Ota ota;
 ustd::Mqtt mqtt;
-ustd::DisplayMatrixMAX72XX matrix("matrix", D8, 8, 1, 1);
-// ustd::LightGPIO led1("led1", D3, true);
-// ustd::LightGPIO led2("led2", D4, true);
+ustd::DisplayMatrixMAX72XX matrix("matrix", D8, 12, 1, 1);
 
 // main application command handler
 void app_command_handler(String topic, String msg, String originator) {
@@ -49,12 +47,11 @@ void setup() {
 
     String a;
     // initialize core components
-    con.begin(&sched, "sub net/# mqtt/# doctor/#", 115200);
+    con.begin(&sched, "sub net/# mqtt/# doctor/# matrix/#", 115200);
     doc.begin(&sched);
-    // led1.begin(&sched);
-    // led2.begin(&sched);
     matrix.begin(&sched);
-    matrix.addfont(&Org_01);
+    matrix.addfont(&muMatrix8ptRegular, 7);
+    matrix.addfont(&muHeavy8ptBold, 7);
 
     net.begin(&sched);
     ota.begin(&sched);

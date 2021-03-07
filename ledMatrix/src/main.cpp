@@ -21,7 +21,7 @@ ustd::Doctor doc;
 ustd::Net net(LED_BUILTIN);
 ustd::Ota ota;
 ustd::Mqtt mqtt;
-ustd::DisplayMatrixMAX72XX matrix("matrix", D8, 12, 1, 1);
+ustd::DisplayMatrixMAX72XX matrix("matrix", D8, 8, 1, 1);
 // ustd::LightGPIO led1("led1", D3, true);
 // ustd::LightGPIO led2("led2", D4, true);
 

@@ -17,6 +17,8 @@
 #include "mup_light.h"
 #endif
 
+#include "mupplet_core.h"
+
 void appLoop();
 
 #if USTD_FEATURE_MEMORY < USTD_FEATURE_MEM_8K
@@ -45,9 +47,13 @@ ustd::Light led1("myLed1", 12, false);
 ustd::Light led2("myLed2", 27, false);
 #endif
 
-#ifdef __UNO__
+#if defined(__UNO__)
+#if defined(__NANO__)
+ustd::Light led1("myLed1", LED_BUILTIN, false);
+#else
 ustd::Light led1("myLed1", 3, false);
 ustd::Light led2("myLed2", 5, false);
+#endif
 #endif
 
 #ifdef __ATMEGA__
@@ -86,6 +92,8 @@ ustd::Light led2("myLed2", 12, true);
 #endif
 
 void setup() {
+    Serial.begin(115200);
+    Serial.println("Starting...");
 #if USTD_FEATURE_MEMORY >= USTD_FEATURE_MEM_8K
     Serial.begin(115200);
     con.begin(&sched);
@@ -96,12 +104,28 @@ void setup() {
     ota.begin(&sched);
 #endif
     led1.begin(&sched);
+#ifndef __NANO__
     led2.begin(&sched);
+#endif
 #ifndef __ATTINY__
     led1.setMode(ustd::LightController::Mode::Wave, 2000, 0.0);
+#ifndef __NANO__
     led2.setMode(ustd::LightController::Mode::Wave, 2000, 0.5);
 #endif
+#endif
     sched.add(appLoop, "1", 1000000L);
+
+    /*
+        Serial.println("Conv1");
+        String forDisplay = ustd::HD44780Charset::toHD_ASCII("abgjpqyz");
+        Serial.println("Conv2");
+        String utfstring = ustd::HD44780Charset::toUtf8(forDisplay);
+        Serial.println("Print1");
+        Serial.println(xx);
+        Serial.println("Print2");
+        Serial.println(yy);
+        Serial.println("Done");
+    */
 }
 
 #ifdef __ATTINY__

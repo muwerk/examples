@@ -26,16 +26,16 @@ ustd::Mp3Player *pPlayer;
 void setup() {
     led1.begin(&sched);
     led2.begin(&sched);
-    Serial.setRx(PA10);  // using pin name PY_n
-    Serial.setTx(PA9);   // using pin number PYn
-    pPlayer = new ustd::Mp3Player("mp3", &Serial, ustd::Mp3Player::MP3_PLAYER_TYPE::DFROBOT);
+    Serial1.setRx(PA10);  // using pin name PY_n
+    Serial1.setTx(PA9);   // using pin number PYn
+    pPlayer = new ustd::Mp3Player("mp3", &Serial1, ustd::Mp3Player::MP3_PLAYER_TYPE::DFROBOT);
     pPlayer->begin(&sched);
     led1.setMode(ustd::LightController::Mode::Wave, 2000, 0.0);
     led2.setMode(ustd::LightController::Mode::Wave, 2000, 0.5);
+    //delay(3000);
+    pPlayer->setVolume(20);
     delay(100);
-    pPlayer->setVolume(10);
-    delay(100);
-    pPlayer->playFolderTrack(1, 1);
+    pPlayer->playIndex(1);
     sched.add(appLoop, "1", 1000000L);
 }
 

@@ -20,7 +20,7 @@ ustd::Light led2("myLed2", PA15, true);
 //                      RX    TX
 // HardwareSerial Serial1(10, 9);
 ustd::Mp3Player *pPlayer;
-
+HardwareTimer *pMyTim;
 // HardwareSerial Serial1(PA10, PA9);
 // HardwareSerial Serial3(PA10, PA9);
 void setup() {
@@ -49,11 +49,12 @@ void setup() {
 
 
     // Instantiate HardwareTimer object. Thanks to 'new' instantiation, HardwareTimer is not destructed when setup() function is finished.
-    HardwareTimer *MyTim = new HardwareTimer(Instance);
+    pMyTim = new HardwareTimer(Instance);
 
     // Configure and start PWM
     // MyTim->setPWM(channel, pwmPin, 5, 10, NULL, NULL); // No callback required, we can simplify the function call
-    MyTim->setPWM(channel, pwmPin, 440, 50); // 440 Hertz, 50% dutycycle
+    analogWriteFrequency(440);
+    pMyTim->setPWM(channel, pwmPin, 50, 50); // 440 Hertz, 50% dutycycle
 }
 
 void appLoop() {

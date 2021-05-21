@@ -32,10 +32,10 @@ void setup() {
     pPlayer->begin(&sched);
     led1.setMode(ustd::LightController::Mode::Wave, 2000, 0.0);
     led2.setMode(ustd::LightController::Mode::Wave, 2000, 0.5);
-    //delay(3000);
+    // delay(3000);
     pPlayer->setVolume(20);
     delay(100);
-    pPlayer->playIndex(1);
+    pPlayer->loopIndex(1);
     sched.add(appLoop, "1", 1000000L);
 
     // no need to configure pin, it will be done by HardwareTimer configuration
@@ -44,16 +44,18 @@ void setup() {
     // Automatically retrieve TIM instance and channel associated to pin
     // This is used to be compatible with all STM32 series automatically.
     uint8_t pwmPin = PA8;
-    TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(pwmPin), PinMap_PWM);
+    TIM_TypeDef *Instance =
+        (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(pwmPin), PinMap_PWM);
     uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(pwmPin), PinMap_PWM));
 
-
-    // Instantiate HardwareTimer object. Thanks to 'new' instantiation, HardwareTimer is not destructed when setup() function is finished.
+    // Instantiate HardwareTimer object. Thanks to 'new' instantiation, HardwareTimer is not
+    // destructed when setup() function is finished.
     HardwareTimer *MyTim = new HardwareTimer(Instance);
 
     // Configure and start PWM
-    // MyTim->setPWM(channel, pwmPin, 5, 10, NULL, NULL); // No callback required, we can simplify the function call
-    MyTim->setPWM(channel, pwmPin, 440, 50); // 440 Hertz, 50% dutycycle
+    // MyTim->setPWM(channel, pwmPin, 5, 10, NULL, NULL); // No callback required, we can simplify
+    // the function call
+    MyTim->setPWM(channel, pwmPin, 440, 50);  // 440 Hertz, 50% dutycycle
 }
 
 void appLoop() {

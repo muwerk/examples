@@ -19,6 +19,7 @@ ustd::Ota ota;
 ustd::TempHumDHT dht("myDht", 5, 0);
 #else
 ustd::TempHumDHT dht("myDht", D4, 0);
+ustd::TempHumDHT dht2("myDht2", D7, 1);
 #endif
 
 void setup() {
@@ -31,6 +32,7 @@ void setup() {
     ota.begin(&sched);
     /*int tID = */ sched.add(appLoop, "main", 1000000);
     dht.begin(&sched);
+    dht2.begin(&sched);
 }
 
 void appLoop() {

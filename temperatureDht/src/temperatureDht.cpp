@@ -17,6 +17,7 @@ ustd::Ota ota;
 
 #ifdef __ESP32__
 ustd::TempHumDHT dht("myDht", 5, 0);
+ustd::TempHumDHT dht2("myDht2", 6, 1);
 #else
 ustd::TempHumDHT dht("myDht", D4, 0);
 ustd::TempHumDHT dht2("myDht2", D7, 1);

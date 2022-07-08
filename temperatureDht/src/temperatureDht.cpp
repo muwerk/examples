@@ -25,10 +25,10 @@ ustd::Ota ota;
 
 
 #ifdef __ESP32__
-ustd::TempHumDHT dht("myDht", 5, 0);
+ustd::TempHumDHT dht("myDht", 5, 0);    // name, pin, unique interrupt-id (0..9)
 ustd::TempHumDHT dht2("myDht2", 6, 1);
 #else
-ustd::TempHumDHT dht("myDht", D4, 0);
+ustd::TempHumDHT dht("myDht", D4, 0);  // name, pin, unique interrupt-id (0..9)
 ustd::TempHumDHT dht2("myDht2", D7, 1);
 #endif
 
@@ -58,6 +58,7 @@ int t2_val=0;
 time_t lastUpdate_t1=0;
 time_t lastUpdate_t2=0;
 
+// This is called on Sensor-update events
 void sensorUpdates(String topic, String msg, String originator) {
     int disp_update=0;
     char buf1[64],buf2[64];
@@ -106,9 +107,12 @@ void setup() {
     mqtt.begin(&sched);
     ota.begin(&sched);
     int tID = sched.add(appLoop, "main", 1000000);
+
+    // sensors start measuring temperature (and humidity)
     dht.begin(&sched);
     dht2.begin(&sched);
 
+    // subscribe to kernel's MQTT messages, the sensorUpdates() funktion does the event handling
     sched.subscribe(tID, "myDht/sensor/temperature", sensorUpdates);
     sched.subscribe(tID, "myDht2/sensor/temperature", sensorUpdates);
 }

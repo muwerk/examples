@@ -26,13 +26,11 @@ ustd::Ota ota;
 
 #ifdef __ESP32__
 ustd::TempHumDHT dht("myDht", 5, 0);    // name, pin, unique interrupt-id (0..9)
-ustd::TempHumDHT dht2("myDht2", 6, 1);
 #else
-ustd::TempHumDHT dht("myDht", D4, 0);  // name, pin, unique interrupt-id (0..9)
-ustd::TempHumDHT dht2("myDht2", D7, 1);
+ustd::TempHumDHT dht("myDht", D7, 0);  // name, pin, unique interrupt-id (0..9)
 #endif
 
-void updateDisplay(String msg1, String msg2) {
+void updateDisplay(String msg1, String msg2, double d1, double d2) {
     display.clearDisplay();
 
     display.setCursor(10,28);
@@ -40,23 +38,49 @@ void updateDisplay(String msg1, String msg2) {
     display.setCursor(10,63);
     display.println(msg2);
 
-    display.drawLine(5, 28, 5, 4, SSD1306_WHITE);
-    display.drawLine(5, 4, 3, 6, SSD1306_WHITE);
-    display.drawLine(5, 4, 7, 6, SSD1306_WHITE);
-    
-    display.drawLine(5, 63, 5, 36, SSD1306_WHITE);
-    display.drawLine(5, 36, 3, 38, SSD1306_WHITE);
-    display.drawLine(5, 36, 7, 38, SSD1306_WHITE);
-
+    if (d1!=0.0) {
+        display.drawLine(5, 12, 5, 4, SSD1306_WHITE);
+        display.drawLine(6, 12, 6, 4, SSD1306_WHITE);
+        if (d1>0.0) { // up arrow
+            display.drawLine(5, 4, 2, 7, SSD1306_WHITE);
+            display.drawLine(5, 4, 8, 7, SSD1306_WHITE);
+            display.drawLine(6, 4, 3, 7, SSD1306_WHITE);
+            display.drawLine(6, 4, 9, 7, SSD1306_WHITE);
+        } else { // down arrow
+            display.drawLine(5, 12, 2, 9, SSD1306_WHITE);
+            display.drawLine(5, 12, 8, 9, SSD1306_WHITE);
+            display.drawLine(6, 12, 3, 9, SSD1306_WHITE);
+            display.drawLine(6, 12, 9, 9, SSD1306_WHITE);
+        }
+    }
+    if (d2!=0.0) {
+        display.drawLine(5, 36, 5, 44, SSD1306_WHITE);
+        display.drawLine(6, 36, 6, 44, SSD1306_WHITE);
+        if (d2>0.0) { // up arrow
+            display.drawLine(5, 36, 2, 39, SSD1306_WHITE);
+            display.drawLine(5, 36, 8, 39, SSD1306_WHITE);
+            display.drawLine(6, 36, 3, 39, SSD1306_WHITE);
+            display.drawLine(6, 36, 9, 39, SSD1306_WHITE);
+        } else { // down arrow
+            display.drawLine(5, 44, 2, 41, SSD1306_WHITE);
+            display.drawLine(5, 44, 8, 41, SSD1306_WHITE);
+            display.drawLine(6, 44, 3, 41, SSD1306_WHITE);
+            display.drawLine(6, 44, 9, 41, SSD1306_WHITE);
+        }
+    }
     display.display();
 
 }
 
-double t1,t2;
+double t1,t2, d1, d2;
 int t1_val=0;
 int t2_val=0;
 time_t lastUpdate_t1=0;
 time_t lastUpdate_t2=0;
+
+#define HIST_CNT 4
+double hist_t1[HIST_CNT];
+double hist_t2[HIST_CNT];
 
 // This is called on Sensor-update events
 void sensorUpdates(String topic, String msg, String originator) {
@@ -65,12 +89,26 @@ void sensorUpdates(String topic, String msg, String originator) {
     if (topic == "myDht/sensor/temperature") {
         t1 = msg.toFloat();
         lastUpdate_t1=time(nullptr);
+        if (!t1_val) {
+            for (int i=0; i<HIST_CNT; i++) hist_t1[i]=t1;
+        } else {
+            for (int i=0; i<HIST_CNT-1; i++) hist_t1[i]=hist_t1[i+1];
+            hist_t1[HIST_CNT-1]=t1;
+        }
+        d1=t1-hist_t1[0];
         t1_val=1;
         disp_update=1;
     }
-    if (topic == "myDht2/sensor/temperature") {
+    if (topic == "hastates/sensor/balkon_temperature/state") {
         t2 = msg.toFloat();
         lastUpdate_t2=time(nullptr);
+        if (!t2_val) {
+            for (int i=0; i<HIST_CNT; i++) hist_t2[i]=t2;
+        } else {
+            for (int i=0; i<HIST_CNT-1; i++) hist_t2[i]=hist_t2[i+1];
+            hist_t2[HIST_CNT-1]=t2;
+        }
+        d2=t2-hist_t2[0];
         t2_val=1;
         disp_update=1;
     }
@@ -85,7 +123,7 @@ void sensorUpdates(String topic, String msg, String originator) {
         } else {
             sprintf(buf2,"%s", "NaN");
         }
-        updateDisplay(buf1,buf2);
+        updateDisplay(buf1,buf2,d1,d2);
     }
 }
 
@@ -100,7 +138,7 @@ void setup() {
     display.setTextColor(SSD1306_WHITE); // Draw white text
     display.cp437(true);         // Use full 256 char 'Code Page 437' font
 
-    updateDisplay("init","init");
+    updateDisplay("init","init",0.0,0.0);
 
     con.begin(&sched);
     net.begin(&sched);
@@ -110,11 +148,12 @@ void setup() {
 
     // sensors start measuring temperature (and humidity)
     dht.begin(&sched);
-    dht2.begin(&sched);
 
     // subscribe to kernel's MQTT messages, the sensorUpdates() funktion does the event handling
+    // Interal DHT sensor
     sched.subscribe(tID, "myDht/sensor/temperature", sensorUpdates);
-    sched.subscribe(tID, "myDht2/sensor/temperature", sensorUpdates);
+    // External sensor via mqtt
+    mqtt.addSubscription(tID, "hastates/sensor/balkon_temperature/state", sensorUpdates);
 }
 
 void appLoop() {

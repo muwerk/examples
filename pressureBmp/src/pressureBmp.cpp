@@ -86,7 +86,7 @@ double hist_t2[HIST_CNT];
 void sensorUpdates(String topic, String msg, String originator) {
     int disp_update=0;
     char buf1[64],buf2[64];
-    if (topic == "myBmp180/sensor/temperature") {
+    if (topic == "myBMP180/sensor/temperature") {
         t1 = msg.toFloat();
         lastUpdate_t1=time(nullptr);
         if (!t1_val) {
@@ -151,7 +151,7 @@ void setup() {
 
     // subscribe to kernel's MQTT messages, the sensorUpdates() funktion does the event handling
     // Interal DHT sensor
-    sched.subscribe(tID, "myBmp/sensor/temperature", sensorUpdates);
+    sched.subscribe(tID, "myBMP180/sensor/temperature", sensorUpdates);
     // External sensor via mqtt
     mqtt.addSubscription(tID, "hastates/sensor/balkon_temperature/state", sensorUpdates);
 }

@@ -23,8 +23,8 @@ void setup() {
 #ifdef USE_SERIAL_DBG
     Serial.begin(115200);
 #endif  // USE_SERIAL_DBG
-    display.begin();
-    display.updateDisplay("init","init",0.0,0.0);
+    display.begin("myBMP180/sensor/temperature", "hastates/sensor/balkon_temperature/state", "myBMP180/sensor/pressureNN");
+    display.updateDisplay("init","init","init",0.0,0.0,0.0);
 
     con.begin(&sched);
     net.begin(&sched);
@@ -43,7 +43,9 @@ void setup() {
             display.sensorUpdates(topic, msg, originator);
         };
     sched.subscribe(tID, "myBMP180/sensor/temperature", fnall);
-    sched.subscribe(tID, "myBMP180/sensor/deltaaltitude", fnall);
+    sched.subscribe(tID, "myBMP180/sensor/pressureNN", fnall);
+    // Get outside temp via homeassistant mqtt:
+    mqtt.addSubscription(tID,"hastates/sensor/balkon_temperature/state",fnall);
 }
 
 void appLoop() {
@@ -53,6 +55,9 @@ void appLoop() {
     }
     if (time(nullptr)-display.lastUpdate_t2 > 1800) {
         display.t2_val=0;
+    }
+    if (time(nullptr)-display.lastUpdate_t3 > 1800) {
+        display.t3_val=0;
     }
 }
 

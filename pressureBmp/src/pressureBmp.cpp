@@ -146,8 +146,9 @@ void setup() {
     ota.begin(&sched);
     int tID = sched.add(appLoop, "main", 1000000);
 
-    // sensors start measuring temperature (and humidity)
-    bmp.begin(&sched);
+    // sensors start measuring pressure and temperature
+    bmp.setAltitude(518.0); // 518m above NN, now we also receive PressureNN values for sea level.
+    bmp.begin(&sched, ustd::PressTempBMP180::BMPSampleMode::ULTRA_HIGH_RESOLUTION);
 
     // subscribe to kernel's MQTT messages, the sensorUpdates() funktion does the event handling
     // Interal DHT sensor

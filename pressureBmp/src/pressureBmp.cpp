@@ -23,7 +23,7 @@ void setup() {
 #ifdef USE_SERIAL_DBG
     Serial.begin(115200);
 #endif  // USE_SERIAL_DBG
-    display.begin("myBMP180/sensor/temperature", "hastates/sensor/balkon_temperature/state", "myBMP180/sensor/pressureNN");
+    display.begin("myBMP180/sensor/temperature", "hastates/sensor/balkon_temperature/state", "myBMP180/sensor/pressureNN", "Studio C", "Balkon C", "Luftdruck hPa");
     display.updateDisplay("init","init","init",0.0,0.0,0.0);
 
     con.begin(&sched);

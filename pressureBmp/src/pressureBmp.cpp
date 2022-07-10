@@ -23,12 +23,7 @@ ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
 
-
-#ifdef __ESP32__
-ustd::PressTempBMP180 bmp("myBmp180");
-#else
-ustd::PressTempBMP180 bmp("myBMP180");
-#endif
+ustd::PressTempBMP180 bmp("myBMP180", ustd::PressTempBMP180::FilterMode::FAST);
 
 void updateDisplay(String msg1, String msg2, double d1, double d2) {
     display.clearDisplay();
@@ -99,7 +94,7 @@ void sensorUpdates(String topic, String msg, String originator) {
         t1_val=1;
         disp_update=1;
     }
-    if (topic == "hastates/sensor/balkon_temperature/state") {
+    if (topic == "myBMP180/sensor/pressureNN") {
         t2 = msg.toFloat();
         lastUpdate_t2=time(nullptr);
         if (!t2_val) {
@@ -119,7 +114,7 @@ void sensorUpdates(String topic, String msg, String originator) {
             sprintf(buf1,"%s", "NaN");
         }
         if (t2_val) {
-            sprintf(buf2,"%4.1f C",t2);
+            sprintf(buf2,"%6.1f",t2);
         } else {
             sprintf(buf2,"%s", "NaN");
         }
@@ -151,10 +146,9 @@ void setup() {
     bmp.begin(&sched, ustd::PressTempBMP180::BMPSampleMode::ULTRA_HIGH_RESOLUTION);
 
     // subscribe to kernel's MQTT messages, the sensorUpdates() funktion does the event handling
-    // Interal DHT sensor
+    // Interal BMP180 sensor
     sched.subscribe(tID, "myBMP180/sensor/temperature", sensorUpdates);
-    // External sensor via mqtt
-    mqtt.addSubscription(tID, "hastates/sensor/balkon_temperature/state", sensorUpdates);
+    sched.subscribe(tID, "myBMP180/sensor/pressureNN", sensorUpdates);
 }
 
 void appLoop() {

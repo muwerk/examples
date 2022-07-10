@@ -8,7 +8,7 @@
 #include "mup_presstemp_bmp180.h"
 
 #include <Adafruit_GFX.h>
-#include <Fonts/FreeSans18pt7b.h>
+#include <Fonts/FreeSans12pt7b.h>
 #include <Adafruit_SSD1306.h>
 
 #define SCREEN_X 128
@@ -94,7 +94,7 @@ void sensorUpdates(String topic, String msg, String originator) {
         t1_val=1;
         disp_update=1;
     }
-    if (topic == "myBMP180/sensor/pressureNN") {
+    if (topic == "myBMP180/sensor/deltaaltitude") {
         t2 = msg.toFloat();
         lastUpdate_t2=time(nullptr);
         if (!t2_val) {
@@ -114,7 +114,7 @@ void sensorUpdates(String topic, String msg, String originator) {
             sprintf(buf1,"%s", "NaN");
         }
         if (t2_val) {
-            sprintf(buf2,"%6.1f",t2);
+            sprintf(buf2,"%8.3f",t2);
         } else {
             sprintf(buf2,"%s", "NaN");
         }
@@ -128,7 +128,7 @@ void setup() {
 #endif  // USE_SERIAL_DBG
     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     display.clearDisplay();
-    display.setFont(&FreeSans18pt7b);
+    display.setFont(&FreeSans12pt7b);
     display.setTextSize(1);      // Normal 1:1 pixel scale
     display.setTextColor(SSD1306_WHITE); // Draw white text
     display.cp437(true);         // Use full 256 char 'Code Page 437' font
@@ -142,13 +142,14 @@ void setup() {
     int tID = sched.add(appLoop, "main", 1000000);
 
     // sensors start measuring pressure and temperature
-    bmp.setAltitude(518.0); // 518m above NN, now we also receive PressureNN values for sea level.
+    bmp.setReferenceAltitude(518.0); // 518m above NN, now we also receive PressureNN values for sea level.
+    bmp.startRelativeAltitude(); // Use next pressureNN measurement as altitude reference
     bmp.begin(&sched, ustd::PressTempBMP180::BMPSampleMode::ULTRA_HIGH_RESOLUTION);
 
     // subscribe to kernel's MQTT messages, the sensorUpdates() funktion does the event handling
     // Interal BMP180 sensor
     sched.subscribe(tID, "myBMP180/sensor/temperature", sensorUpdates);
-    sched.subscribe(tID, "myBMP180/sensor/pressureNN", sensorUpdates);
+    sched.subscribe(tID, "myBMP180/sensor/deltaaltitude", sensorUpdates);
 }
 
 void appLoop() {

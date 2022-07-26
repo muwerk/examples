@@ -2,4 +2,5 @@
 .vscode/
 data/net.json
 data/mqtt.json
+data/display.json
 .DS_Store

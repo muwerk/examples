@@ -1,0 +1,4 @@
+{
+    "topics": ["hastates/sensor/temperature/state","hastates/sensor/temperature2/state","hastates/sensor/temperature3/state","temperature4/state"],
+    "captions": ["Balkony C", "North C", "Studio C", "Living C"]
+}

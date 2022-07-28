@@ -19,9 +19,9 @@ ustd::SensorDisplay display("display",128,64,0x3c);
 
 
 #ifdef __ESP32__
-ustd::TempHumDHT dht("myDht", 5, 0);    // name, pin, unique interrupt-id (0..9)
+ustd::TempHumDHT dht("DHT-1", 5, 0);    // name, pin, unique interrupt-id (0..9)
 #else
-ustd::TempHumDHT dht("myDht", D4, 0);  // name, pin, unique interrupt-id (0..9)
+ustd::TempHumDHT dht("DHT-1", D4, 0);  // name, pin, unique interrupt-id (0..9)
 #endif
 
 

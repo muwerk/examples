@@ -1,0 +1,5 @@
+{
+    "layout": "S|D",
+    "topics": ["clock/timeinfo", "DHT-1/sensor/temperature"],
+    "captions": ["Time", "Temperature _C"]
+}

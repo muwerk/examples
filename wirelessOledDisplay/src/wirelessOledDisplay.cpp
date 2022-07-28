@@ -16,7 +16,7 @@ ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
 
-ustd::SensorDisplay display("display", 128,64,0x3c);
+ustd::SensorDisplay display("display", 128,64,0x3c, &Wire, "DE");
 
 void setup() {
 #ifdef USE_SERIAL_DBG

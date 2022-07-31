@@ -1,5 +1,8 @@
 {
-    "layout": "S|FF",
-    "topics": ["clock/timeinfo", "!hastates/sensor/balkon_temperature/state", "!hastates/sensor/netatmo_dominiks_wohnung_indoor_temperature/state"],
-    "captions": ["Uhrzeit", "Balkon _C", "Studio _C"]
+    "layout": "S|fg|fg|fg",
+    "topics": ["clock/timeinfo", "!hastates/sensor/balkon_temperature/state", "!hastates/sensor/balkon_temperature/state", 
+                "!hastates/sensor/klima_nordseite_temperature/state","!hastates/sensor/klima_nordseite_temperature/state",
+                "!hastates/sensor/netatmo_dominiks_wohnung_indoor_temperature/state", "!hastates/sensor/netatmo_dominiks_wohnung_indoor_temperature/state"
+               ],
+    "captions": ["Uhrzeit", "Balkon _C", "_history","Nord _C","_history", "Studio _C", "_history"]
 }

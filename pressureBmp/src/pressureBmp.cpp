@@ -8,7 +8,7 @@
 #include "mup_presstemp_bmp180.h"
 #include "mup_illuminance_ldr.h"
 #include "mup_temphum_dht.h"
-#include "mup_oled.h"
+#include "mup_gfx_panel.h"
 
 void appLoop();
 
@@ -18,10 +18,15 @@ ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
 
+
 ustd::PressTempBMP180 bmp("BMP180-1", ustd::PressTempBMP180::FilterMode::FAST);
 ustd::IlluminanceLdr ldr("Ldr-1", A0);
+#ifdef __ESP32__
+ustd::TempHumDHT dht("DHT-1", 5, 0);
+#else
 ustd::TempHumDHT dht("DHT-1", D5, 0);
-ustd::SensorDisplay display("display",128,64,0x3c);
+#endif
+ustd::GfxPanel display("display", ustd::GfxDrivers::DisplayType::SSD1306, 128, 64, 0x3c);
 
 void setup() {
 #ifdef USE_SERIAL_DBG

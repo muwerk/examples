@@ -2,7 +2,7 @@
     "layout": "S|fg|fg|fg",
     "topics": ["clock/timeinfo", "!hastates/sensor/balkon_temperature/state", "!hastates/sensor/balkon_temperature/state", 
                 "!hastates/sensor/klima_nordseite_temperature/state","!hastates/sensor/klima_nordseite_temperature/state",
-                "!hastates/sensor/netatmo_dominiks_wohnung_indoor_temperature/state", "!hastates/sensor/netatmo_dominiks_wohnung_indoor_temperature/state"
+                "!omu/ldr-bmp180-1/DHT-1/sensor/temperature", "!omu/ldr-bmp180-1/DHT-1/sensor/temperature"
                ],
-    "captions": ["Uhrzeit", "Balkon _C", "_history","Nord _C","_history", "Studio _C", "_history"]
+    "captions": ["Uhrzeit", "Balkon _C", "_aussen S","Nord _C","_aussen N", "Studio _C", "_innen"]
 }

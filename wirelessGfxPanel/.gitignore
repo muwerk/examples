@@ -1,5 +1,6 @@
 .pio
 .vscode/
+.ccls-cache/
 data/net.json
 data/mqtt.json
 data/display.json

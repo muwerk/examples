@@ -17,7 +17,11 @@ ustd::Mqtt mqtt;
 ustd::Ota ota;
 
 // make sure that two json files exist: display1.json and display2.json, corresponding to the names of the GfxPanel s.
+#ifdef __ESP32__
+ustd::GfxPanel displayTft("display1", ustd::GfxDrivers::DisplayType::ST7735, 128, 128, 4, 3, (uint8_t)-1, "DE");
+#else
 ustd::GfxPanel displayTft("display1", ustd::GfxDrivers::DisplayType::ST7735, 128, 128, D4, D3, (uint8_t)-1, "DE");
+#endif
 ustd::GfxPanel displayOled("display2", ustd::GfxDrivers::DisplayType::SSD1306, 128,64, 0x3c, &Wire, "DE");
 
 void setup() {

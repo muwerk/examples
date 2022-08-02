@@ -21,7 +21,7 @@ ustd::Ota ota;
 
 
 ustd::PressTempBMP180 bmp1("BMP180-1", ustd::PressTempBMP180::FilterMode::FAST);
-//ustd::PressTempBMP280 bmp2("BMP280-1", ustd::PressTempBMP180::FilterMode::FAST);
+ustd::PressTempBMP280 bmp2("BMP280-1", ustd::PressTempBMP280::FilterMode::FAST, 0x76);
 
 //ustd::IlluminanceLdr ldr("Ldr-1", A0);
 //#ifdef __ESP32__
@@ -45,11 +45,11 @@ void setup() {
 
     // sensors start measuring pressure and temperature
     bmp1.setReferenceAltitude(518.0); // 518m above NN, now we also receive PressureNN values for sea level.
-//    bmp2.setReferenceAltitude(518.0); // 518m above NN, now we also receive PressureNN values for sea level.
+    bmp2.setReferenceAltitude(518.0); // 518m above NN, now we also receive PressureNN values for sea level.
     bmp1.startRelativeAltitude(); // Use next pressureNN measurement as altitude reference
-//    bmp2.startRelativeAltitude(); // Use next pressureNN measurement as altitude reference
+    bmp2.startRelativeAltitude(); // Use next pressureNN measurement as altitude reference
     bmp1.begin(&sched, ustd::PressTempBMP180::BMPSampleMode::ULTRA_HIGH_RESOLUTION);
-//    bmp2.begin(&sched, ustd::PressTempBMP280::BMPSampleMode::ULTRA_HIGH_RESOLUTION);
+    bmp2.begin(&sched, ustd::PressTempBMP280::BMPSampleMode::ULTRA_HIGH_RESOLUTION);
 
     //ldr.begin(&sched);
     //dht.begin(&sched);

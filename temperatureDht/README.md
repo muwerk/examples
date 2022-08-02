@@ -3,7 +3,7 @@ DHT temperature sensor
 
 A simple example demonstrating muwerk's scheduler, munet interface to WLAN, NTP, OTA and MQTT, with a DHT temperature sensors.
 
-<img src="https://github.com/muwerk/mupplet-core/blob/master/extras/dht22.png" width="50%" height="30%">
+<img src="https://github.com/muwerk/mupplet-sensor/blob/master/extras/dht22.png" width="50%" height="30%">
 Hardware: D1 mini ESP8266, DHT22 sensor, SSD1306 Oled display.
 
 ## Building with platformio

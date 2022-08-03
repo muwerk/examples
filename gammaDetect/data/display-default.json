@@ -1,0 +1,5 @@
+{
+    "layout": "S|G",
+    "topics": ["clock/timeinfo","GAMMA-1/sensor/gamma"],
+    "captions": ["Clock", "Gamma radiation"]
+}

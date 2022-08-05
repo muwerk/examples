@@ -1,0 +1,5 @@
+{
+    "layout": "fg|ig",
+    "topics": ["BMP180-1/sensor/temperature","BMP180-1/sensor/temperature","BMP180-1/sensor/pressureNN", "BMP180-1/sensor/pressureNN"],
+    "captions": ["BMP180 _C", "BMP180 _C", "BMP180 _hPa", "BMP180 _hPa"]
+}

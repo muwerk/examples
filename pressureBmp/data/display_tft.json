@@ -1,5 +1,5 @@
 {
-    "layout": "fg|ig|fg|G",
+    "layout": "fg|fg|ig|G",
     "topics": ["BME280-1/sensor/temperature", "BME280-1/sensor/temperature", "BME280-1/sensor/humidity","BME280-1/sensor/humidity", "BME280-1/sensor/pressureNN", "BME280-1/sensor/pressureNN", "BME280-1/sensor/relativealtitude"], 
     "captions": ["BME280 _C", "BME280 _C", "BME280 _%rH","BME280 _%rH", "BME280 _hPa", "BME280 _hPa", "BME280 _m"] 
 }

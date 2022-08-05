@@ -94,7 +94,7 @@ Note: `serial` is the serial console of muwerk (see below), and `serlink` is
 
 ### The Arduino
 
-Note: we append `\arduino` (the name of the MuSerial link of the Arduino)
+Note: we append `/arduino` (the name of the MuSerial link of the Arduino)
 to the hostname of the ESP32:
 
 ```

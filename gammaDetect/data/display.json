@@ -1,5 +1,5 @@
 {
     "layout": "G|dd|G|G",
     "topics": ["GEIGER-1/sensor/frequency","GAMMA-1/sensor/gamma10minavg","GAMMA-1/sensor/gamma1minavg","GAMMA-1/sensor/gamma10minavg","GAMMA-1/sensor/gamma1minavg"],
-    "captions": ["Geigercounter Hz", "G10m _uS/h","G1m _uS/h","Gamma 10m _uS/h", "Gamma 1m  _uS/h"]
+    "captions": ["Geiger counter _Hz", "G10m _uS/h","G1m _uS/h","Gamma 10m _uS/h", "Gamma 1m  _uS/h"]
 }

@@ -31,9 +31,9 @@ ustd::GfxPanel displayTft("display1", ustd::GfxDrivers::DisplayType::ST7735, 160
 #endif // __ESP32S2__
 #else
 //                                                                                     CS  DC  RST
-ustd::GfxPanel displayTft("display1", ustd::GfxDrivers::DisplayType::ST7735, 128, 128, D4, D3, (uint8_t)-1, "DE");
-#endif
+//ustd::GfxPanel displayTft("display1", ustd::GfxDrivers::DisplayType::ST7735, 128, 128, D4, D3, (uint8_t)-1, "DE");
 ustd::GfxPanel displayOled("display2", ustd::GfxDrivers::DisplayType::SSD1306, 128,64, 0x3c, &Wire, "DE");
+#endif
 
 void setup() {
 #ifdef USE_SERIAL_DBG
@@ -46,11 +46,24 @@ void setup() {
     mqtt.begin(&sched);
     ota.begin(&sched);
 
+#ifdef __ESP32__
 Serial.println("Starting display");
     displayTft.begin(&sched,&mqtt);
 Serial.println("Display started");
-//    displayOled.begin(&sched,&mqtt);
+#else
+    ustd::array<String> topics;
+    String tps[]={"clock/timeinfo", "!hastates/sensor/klima_nordseite_temperature/state", "!hastates/sensor/klima_kuche_temperature/state"};
+    for (String t:tps) {
+        topics.add(t);
+    }
 
+    ustd::array<String> captions;
+    String cps[]={"Time", "Nord _C", "Kueche _C"};
+    for (String t:cps) {
+        captions.add(t);
+    }
+    displayOled.begin(&sched,&mqtt,"S|ff",topics,captions);
+#endif
     sched.add(appLoop, "main", 1000000);
 }
 

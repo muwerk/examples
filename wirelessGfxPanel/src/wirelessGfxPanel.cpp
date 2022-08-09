@@ -51,18 +51,9 @@ Serial.println("Starting display");
     displayTft.begin(&sched,&mqtt);
 Serial.println("Display started");
 #else
-    ustd::array<String> topics;
-    String tps[]={"clock/timeinfo", "!hastates/sensor/klima_nordseite_temperature/state", "!hastates/sensor/klima_kuche_temperature/state"};
-    for (String t:tps) {
-        topics.add(t);
-    }
-
-    ustd::array<String> captions;
-    String cps[]={"Time", "Nord _C", "Kueche _C"};
-    for (String t:cps) {
-        captions.add(t);
-    }
-    displayOled.begin(&sched,&mqtt,"S|ff",topics,captions);
+    const char *topics[]={"clock/timeinfo", "!hastates/sensor/klima_nordseite_temperature/state", "!hastates/sensor/klima_kuche_temperature/state"};
+    const char *captions[]={"Time", "Nord _C", "Kueche _C"};
+    displayOled.begin(&sched,&mqtt,"S|ff",3,topics,captions);
 #endif
     sched.add(appLoop, "main", 1000000);
 }

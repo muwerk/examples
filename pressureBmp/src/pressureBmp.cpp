@@ -22,7 +22,13 @@ ustd::PressTempBMP180 bmp1("BMP180-1", ustd::PressTempBMP180::FilterMode::FAST);
 ustd::PressTempHumBME280 bme1("BME280-1", ustd::PressTempHumBME280::FilterMode::FAST, 0x76);
 
 ustd::GfxPanel displayOled("display_oled", ustd::GfxDrivers::DisplayType::SSD1306, 128, 64, 0x3c);
+#ifdef __ESP32__
+//                                                                                     CS  DC  RST
+ustd::GfxPanel displayTft("display1", ustd::GfxDrivers::DisplayType::ST7735, 160, 128,  5, 16, 17, "DE");
+
+#else
 ustd::GfxPanel displayTft("display_tft", ustd::GfxDrivers::DisplayType::ST7735, 128, 128, D4, D3, -1);
+#endif
 
 void setup() {
 #ifdef USE_SERIAL_DBG

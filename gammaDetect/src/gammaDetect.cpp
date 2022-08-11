@@ -26,7 +26,7 @@ ustd::Ota ota;
 
 #ifdef __ESP32__
 ustd::FrequencyCounter geiger("GEIGER-1", 26, 2, ustd::FrequencyCounter::MeasureMode::LOWFREQUENCY_FAST);
-ustd::GfxPanel display("display-b", ustd::GfxDrivers::DisplayType::ST7735, 160, 128,  5, 16, 17, "DE");
+ustd::GfxPanel display("display-b", ustd::GfxDrivers::DisplayType::ST7735, 128, 160,  5, 16, 17, "DE");
 #else
 ustd::GfxPanel display("display", ustd::GfxDrivers::DisplayType::ST7735, 128, 128, D4, D3, (uint8_t)-1, "DE");
 #endif
@@ -45,13 +45,15 @@ void setup() {
     
     gammaG.begin(&sched, &Wire, true);
 #ifdef __ESP32__
-    geiger.begin(&sched);
+    geiger.begin(&sched, 1000000L); // measure every us.
 #endif
+    display.setSlotHistorySampleRateMs(1,1000); // Geiger counter graphics slot 1, rate update in ms.
     int tID = sched.add(appLoop, "main", 1000000);
 
 }
 
 void appLoop() {
+    display.updateDisplay(true);
 }
 
 // Never add code to this loop, use appLoop() instead.

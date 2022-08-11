@@ -39,7 +39,7 @@ void setup() {
     mqtt.begin(&sched);
     ota.begin(&sched);
     displayOled.begin(&sched, &mqtt);
-    displayTft.begin(&sched, &mqtt);
+    displayTft.begin(&sched, &mqtt,false);
 
     int tID = sched.add(appLoop, "main", 1000000);
 

@@ -8,9 +8,6 @@
 #include "console.h"
 #include "jsonfile.h"
 
-#include "doctor.h"
-//#include "i2cdoctor.h"
-
 #include "mup_gfx_panel.h"
 #include "mup_gamma_gdk101.h"
 #include "mup_frequency_counter.h"
@@ -22,7 +19,6 @@ ustd::SerialConsole con;
 ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
-//ustd::I2CDoctor i2cdoc;
 
 #ifdef __ESP32__
 ustd::FrequencyCounter geiger("GEIGER-1", 26, 2, ustd::FrequencyCounter::MeasureMode::LOWFREQUENCY_FAST);
@@ -40,11 +36,10 @@ void setup() {
     net.begin(&sched);
     mqtt.begin(&sched);
     ota.begin(&sched);
-    // i2cdoc.begin(&sched, &Wire);
     display.begin(&sched, &mqtt, true);
     
     gammaG.begin(&sched, &Wire, true);
-    uint32_t framesMs=100;
+    uint32_t framesMs=50;
 #ifdef __ESP32__
     geiger.begin(&sched, framesMs*1000L); // measure every us.
 #endif

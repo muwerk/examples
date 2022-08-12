@@ -44,11 +44,12 @@ void setup() {
     display.begin(&sched, &mqtt, true);
     
     gammaG.begin(&sched, &Wire, true);
-    uint32_t framesMs=200;
+    uint32_t framesMs=100;
 #ifdef __ESP32__
     geiger.begin(&sched, framesMs*1000L); // measure every us.
 #endif
     display.setSlotHistorySampleRateMs(1,framesMs); // Geiger counter graphics slot 1, rate update in ms.
+    display.setSlotHistorySampleRateMs(0,2000); // Geiger counter graphics slot 0, rate update in ms.
     int tID = sched.add(appLoop, "main", 1000000);
 
 }

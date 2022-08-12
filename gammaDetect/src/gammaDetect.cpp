@@ -41,19 +41,19 @@ void setup() {
     mqtt.begin(&sched);
     ota.begin(&sched);
     // i2cdoc.begin(&sched, &Wire);
-    display.begin(&sched, &mqtt);
+    display.begin(&sched, &mqtt, true);
     
     gammaG.begin(&sched, &Wire, true);
 #ifdef __ESP32__
-    geiger.begin(&sched, 1000000L); // measure every us.
+    geiger.begin(&sched, 100000L); // measure every us.
 #endif
-    display.setSlotHistorySampleRateMs(1,1000); // Geiger counter graphics slot 1, rate update in ms.
+    display.setSlotHistorySampleRateMs(1,100); // Geiger counter graphics slot 1, rate update in ms.
     int tID = sched.add(appLoop, "main", 1000000);
 
 }
 
 void appLoop() {
-    display.updateDisplay(true);
+    //display.updateDisplay(true);
 }
 
 // Never add code to this loop, use appLoop() instead.

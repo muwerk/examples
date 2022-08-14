@@ -3,6 +3,7 @@
 #define USE_TFT
 #define USE_BMP180
 #define USE_BME280
+#define USE_TSL2561
 
 #include "ustd_platform.h"
 #include "scheduler.h"
@@ -17,7 +18,13 @@
 #ifdef USE_BME280
 #include "mup_presstemphum_bme280.h"
 #endif
+#ifdef USE_TSL2561
+#include "mup_illuminance_tsl2561.h"
+#endif
+
+#if defined(USE_OLED) || defined(USE_TFT)
 #include "mup_gfx_panel.h"
+#endif
 
 
 void appLoop();
@@ -33,6 +40,9 @@ ustd::PressTempBMP180 bmp1("BMP180-1", ustd::PressTempBMP180::FilterMode::FAST);
 #endif
 #ifdef USE_BME280
 ustd::PressTempHumBME280 bme1("BME280-1", ustd::PressTempHumBME280::FilterMode::FAST, 0x76);
+#endif
+#ifdef USE_TSL2561
+ustd::IlluminanceTSL2561 tsl1("TSL2561-1", ustd::IlluminanceTSL2561::FilterMode::FAST, 0x39);
 #endif
 
 #ifdef USE_OLED
@@ -59,10 +69,10 @@ void setup() {
     mqtt.begin(&sched);
     ota.begin(&sched);
 #ifdef USE_OLED
-    const char *topics1[]={"BMP180-1/sensor/temperature","BMP180-1/sensor/temperature",
-                           "BMP180-1/sensor/pressureNN", "BME280-1/sensor/relativealtitude"};
-    const char *captions1[]={"BP18 _C", "BP18 _C", "BP18 _hPa", "BE28 _m"};
-    displayOled.begin(&sched, &mqtt,"fg|ig",4,topics1,captions1);
+    const char *topics1[]={"TSL2561-1/sensor/illuminance","TSL2561-1/sensor/illuminance",
+                           "TSL2561-1/sensor/unitilluminance", "TSL2561-1/sensor/unitilluminance"};
+    const char *captions1[]={"TSL Ch1", "TSL Ch1", "TSL Ch2", "TSL Ch2"};
+    displayOled.begin(&sched, &mqtt,"ig|ig",4,topics1,captions1);
     displayOled.setSlotHistorySampleRateMs(3,2000);   // show altitude changes every 50ms
 #endif
 #ifdef USE_TFT
@@ -86,6 +96,9 @@ void setup() {
     bme1.setReferenceAltitude(518.0); // 518m above NN, now we also receive PressureNN values for sea level.
     bme1.startRelativeAltitude(); // Use next pressureNN measurement as altitude reference
     bme1.begin(&sched, ustd::PressTempHumBME280::BMESampleMode::STANDARD);
+#endif
+#ifdef USE_TSL2561
+    tsl1.begin(&sched);
 #endif
 }
 

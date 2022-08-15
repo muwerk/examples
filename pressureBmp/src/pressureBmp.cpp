@@ -69,10 +69,10 @@ void setup() {
     mqtt.begin(&sched);
     ota.begin(&sched);
 #ifdef USE_OLED
-    const char *topics1[]={"TSL2561-1/sensor/illuminance","TSL2561-1/sensor/illuminance",
-                           "TSL2561-1/sensor/unitilluminance", "TSL2561-1/sensor/unitilluminance"};
-    const char *captions1[]={"TSL Ch1", "TSL Ch1", "TSL Ch2", "TSL Ch2"};
-    displayOled.begin(&sched, &mqtt,"ig|ig",4,topics1,captions1);
+    const char *topics1[]={"TSL2561-1/sensor/lightch0","TSL2561-1/sensor/irch1",
+                           "TSL2561-1/sensor/unitilluminance", "TSL2561-1/sensor/illuminance"};
+    const char *captions1[]={"TSL _Ch0", "TSL _Ch1", "TSL _unit", "TSL _lux"};
+    displayOled.begin(&sched, &mqtt,"ii|dd",4,topics1,captions1);
     displayOled.setSlotHistorySampleRateMs(3,2000);   // show altitude changes every 50ms
 #endif
 #ifdef USE_TFT

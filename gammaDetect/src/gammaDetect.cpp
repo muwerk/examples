@@ -14,7 +14,7 @@
 
 void appLoop();
 
-ustd::Scheduler sched(10,16,32);
+ustd::Scheduler sched(10, 16, 32);
 ustd::SerialConsole con;
 ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
@@ -22,11 +22,11 @@ ustd::Ota ota;
 
 #ifdef __ESP32__
 ustd::FrequencyCounter geiger("GEIGER-1", 26, 2, ustd::FrequencyCounter::MeasureMode::LOWFREQUENCY_FAST);
-ustd::GfxPanel display("display-b", ustd::GfxDrivers::DisplayType::ST7735, 128, 160,  5, 16, 17, "DE");
+ustd::GfxPanel display("display-b", ustd::GfxDrivers::DisplayType::ST7735, 128, 160, 5, 16, 17, "DE");
 #else
 ustd::GfxPanel display("display", ustd::GfxDrivers::DisplayType::ST7735, 128, 128, D4, D3, (uint8_t)-1, "DE");
 #endif
-ustd::GammaGDK101 gammaG("GAMMA-1",ustd::GammaGDK101::FilterMode::FAST);
+ustd::GammaGDK101 gammaG("GAMMA-1", ustd::GammaGDK101::FilterMode::FAST);
 
 void setup() {
 #ifdef USE_SERIAL_DBG
@@ -37,16 +37,15 @@ void setup() {
     mqtt.begin(&sched);
     ota.begin(&sched);
     display.begin(&sched, &mqtt, true);
-    
-    gammaG.begin(&sched, &Wire, true);
-    uint32_t framesMs=50;
-#ifdef __ESP32__
-    geiger.begin(&sched, framesMs*1000L); // measure every us.
-#endif
-    display.setSlotHistorySampleRateMs(1,framesMs); // Geiger counter graphics slot 1, rate update in ms.
-    display.setSlotHistorySampleRateMs(0,2000); // Geiger counter graphics slot 0, rate update in ms.
-    int tID = sched.add(appLoop, "main", 1000000);
 
+    gammaG.begin(&sched, &Wire, true);
+    uint32_t framesMs = 50;
+#ifdef __ESP32__
+    geiger.begin(&sched, framesMs * 1000L);  // measure every us.
+#endif
+    display.setSlotHistorySampleRateMs(1, framesMs);  // Geiger counter graphics slot 1, rate update in ms.
+    display.setSlotHistorySampleRateMs(0, 2000);      // Geiger counter graphics slot 0, rate update in ms.
+    int tID = sched.add(appLoop, "main", 1000000);
 }
 
 void appLoop() {

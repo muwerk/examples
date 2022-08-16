@@ -39,7 +39,7 @@ void setup() {
     display.begin(&sched, &mqtt, true);
 
     gammaG.begin(&sched, &Wire, true);
-    uint32_t framesMs = 100;
+    uint32_t framesMs = 50;
     uint32_t textMs = 500;
 #ifdef __ESP32__
     geiger.begin(&sched, framesMs * 1000L);  // measure every framesMs*1000 us.

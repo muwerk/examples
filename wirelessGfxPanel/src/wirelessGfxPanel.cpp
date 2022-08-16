@@ -51,9 +51,9 @@ void setup() {
     displayTft.begin(&sched, &mqtt);
     Serial.println("Display started");
 #else
-    const char *topics[] = {"clock/timeinfo", "!hastates/sensor/klima_nordseite_temperature/state", "!hastates/sensor/klima_kuche_temperature/state"};
-    const char *captions[] = {"Time", "Nord _C", "Kueche _C"};
-    displayOled.begin(&sched, &mqtt, "S|ff", 3, topics, captions);
+    const char *topics[] = {"!hastates/sensor/klima_nordseite_temperature/state", "!hastates/sensor/klima_kuche_temperature/state","!hastates/sensor/klima_nordseite_temperature/state", "!hastates/sensor/klima_kuche_temperature/state"};
+    const char *captions[] = {"Nord _C", "Kueche _C","Nord _C", "Kueche _C"};
+    displayOled.begin(&sched, &mqtt, "ff|gg", 4, topics, captions);
 #endif
     sched.add(appLoop, "main", 1000000);
 }

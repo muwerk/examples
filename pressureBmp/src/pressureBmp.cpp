@@ -2,7 +2,7 @@
 #define USE_OLED
 #define USE_TFT
 #define USE_BMP180
-#define USE_BMP280
+//#define USE_BMP280   // Can't be used together with BME280
 #define USE_BME280
 #define USE_TSL2561
 
@@ -75,17 +75,21 @@ void setup() {
     const char *topics1[] = {"TSL2561-1/sensor/lightch0", "TSL2561-1/sensor/irch1",
                              "TSL2561-1/sensor/unitilluminance", "TSL2561-1/sensor/illuminance"};
     const char *captions1[] = {"TSL _Ch0", "TSL _Ch1", "TSL _unit", "TSL _lux"};
-    displayOled.begin(&sched, &mqtt, "ii|dd", 4, topics1, captions1);
-    displayOled.setSlotHistorySampleRateMs(3, 2000);  // show altitude changes every 50ms
+    displayOled.begin(&sched, &mqtt, "ii|dg", 4, topics1, captions1);
+    uint32_t oledFrames = 1000;
+    displayOled.setSlotHistorySampleRateMs(2, oledFrames);
+    displayOled.setSlotHistorySampleRateMs(3, oledFrames);
 #endif
 #ifdef USE_TFT
     const char *topics2[] = {"BME280-1/sensor/temperature", "BME280-1/sensor/temperature", "BME280-1/sensor/humidity",
-                             "BME280-1/sensor/humidity", "BME280-1/sensor/pressureNN", "BME280-1/sensor/pressureNN",
-                             "BME280-1/sensor/relativealtitude"};
+                             "BME280-1/sensor/humidity", "BME280-1/sensor/deltaaltitude", "BME280-1/sensor/deltaaltitude",
+                             "BME280-1/sensor/deltaaltitude"};
     const char *captions2[] = {"BE28 _C", "BE28 _C", "BE28 _%rH", "BE28 _%rH", "BE28 _hPa", "BE28 _hPa", "BE28 _m"};
-    displayTft.begin(&sched, &mqtt, "fg|fg|ig|G", 7, topics2, captions2, USE_CANVAS_MEMORY);  // Only use canvas memory if ESP32 (large memory requirement!)
-    displayTft.setSlotHistorySampleRateMs(6, 200);                                            // show altitude changes every n ms
-    bme1.setPollRateMs(200);
+    displayTft.begin(&sched, &mqtt, "fg|fg|dg|G", 7, topics2, captions2, USE_CANVAS_MEMORY);  // Only use canvas memory if ESP32 (large memory requirement!)
+    uint32_t bmeFrames = 400;
+    displayTft.setSlotHistorySampleRateMs(4, bmeFrames);  // show altitude changes every n ms
+    displayTft.setSlotHistorySampleRateMs(5, bmeFrames);  // show altitude changes every n ms
+    displayTft.setSlotHistorySampleRateMs(6, bmeFrames);  // show altitude changes every n ms
 #endif
 
     int tID = sched.add(appLoop, "main", 1000000);
@@ -98,10 +102,10 @@ void setup() {
 #ifdef USE_BME280
     bme1.setReferenceAltitude(518.0);  // 518m above NN, now we also receive PressureNN values for sea level.
     bme1.startRelativeAltitude();      // Use next pressureNN measurement as altitude reference
-    bme1.begin(&sched, &Wire, 2000, ustd::PressTempHumBME280::BMESampleMode::STANDARD);
+    bme1.begin(&sched, &Wire, bmeFrames, ustd::PressTempHumBME280::BMESampleMode::STANDARD);
 #endif
 #ifdef USE_TSL2561
-    tsl1.begin(&sched);
+    tsl1.begin(&sched, &Wire, oledFrames);
 #endif
 }
 

@@ -37,8 +37,8 @@ void setup() {
     mqtt.begin(&sched);
     ota.begin(&sched);
     display.begin(&sched, &mqtt, true);
-    uint32_t framesMs = 50;
-    uint32_t textMs = 500;
+    uint32_t framesMs = 1000;
+    uint32_t textMs = 2000;
 
     gammaG.begin(&sched, &Wire, framesMs, true);
 #ifdef __ESP32__

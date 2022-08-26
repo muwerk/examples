@@ -1,5 +1,3 @@
-#define __ESP32__
-
 #include "ustd_platform.h"
 #include "scheduler.h"
 #include "net.h"

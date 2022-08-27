@@ -7,6 +7,7 @@ A simple example demonstrating muwerk's scheduler, munet interface to WLAN, NTP,
 * Geiger counter (cpm)
 * TSL2561 (Illuminance)
 * BME280 (Temperature, humidity, pressure)
+* ELV lightning warner ("Gewitterwarner GW1"), based on AS3935
 
 ### Sensor output
 

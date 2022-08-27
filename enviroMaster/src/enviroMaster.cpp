@@ -13,6 +13,7 @@
 #include "mup_frequency_counter.h"
 #include "mup_illuminance_tsl2561.h"
 #include "mup_presstemphum_bme280.h"
+#include "mup_switch.h"
 
 void appLoop();
 
@@ -26,6 +27,11 @@ ustd::GfxPanel display("display", ustd::GfxDrivers::DisplayType::ST7735, 128, 16
 ustd::FrequencyCounter geiger("GEIGER-1", 26, 2, ustd::FrequencyCounter::MeasureMode::LOWFREQUENCY_MEDIUM);
 ustd::GammaGDK101 gammaG("GAMMA-1", ustd::GammaGDK101::FilterMode::FAST);
 ustd::PressTempHumBME280 bme280("BME280-1", ustd::PressTempHumBME280::FilterMode::FAST);
+
+// Ports 32-34 connected to "ELV Gewitterwarner GW2", an AS3935 based lighning detector.
+ustd::Switch lightningNone("LightningNoWarning", 32);   // Normal, no warnings
+ustd::Switch lightningActive("LightningActive", 33);    // Active lightning!
+ustd::Switch lightningWarning("LightningWarning", 34);  // Warning: lighning danger!
 
 ustd::IlluminanceTSL2561 tsl2561("TSL2561-1", ustd::IlluminanceTSL2561::FilterMode::FAST, 0x29);  // non-standard i2c address, adr-select low, otherwise clash with GDK101 which is on 0x39
 
@@ -47,6 +53,12 @@ void setup() {
     bme280.setReferenceAltitude(518.0);      // 518m above NN, now we also receive PressureNN values for sea level.
 
     tsl2561.begin(&sched, &Wire, framesMs);  // measure every framesMs*1000 us.
+
+    lightningNone.begin(&sched);
+    lightningActive.begin(&sched);
+    lightningActive.activateCounter(true);  // send `count` messages for every detected lightning
+    lightningWarning.begin(&sched);
+    lightningWarning.setDebounce(500);
 
     display.setSlotHistorySampleRateMs(0, textMs);    // Geiger counter graphics slot 1, rate update in ms.
     display.setSlotHistorySampleRateMs(1, framesMs);  // Geiger counter graphics slot 0, rate update in ms.

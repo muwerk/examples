@@ -1,4 +1,3 @@
-
 #define USE_OLED
 #define USE_TFT
 #define USE_BMP180

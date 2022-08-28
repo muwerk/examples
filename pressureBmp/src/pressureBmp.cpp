@@ -45,7 +45,7 @@ ustd::PressTempBMP180 bmp1("BMP180-1", ustd::PressTempBMP180::FilterMode::FAST);
 ustd::PressTempHumBME280 bme1("BME280-1", ustd::PressTempHumBME280::FilterMode::FAST, 0x76);
 #endif
 #ifdef USE_TSL2561
-ustd::IlluminanceTSL2561 tsl1("TSL2561-1", ustd::IlluminanceTSL2561::FilterMode::FAST, 0x39);
+ustd::IlluminanceTSL2561 tsl1("TSL2561-1", ustd::IlluminanceTSL2561::FilterMode::FAST, ustd::IlluminanceTSL2561::IntegrationMode::LONGTERM402ms, ustd::IlluminanceTSL2561::GainMode::LOW1x, 0x39);
 #endif
 
 #ifdef USE_OLED

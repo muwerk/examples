@@ -26,6 +26,8 @@ omu/enviro-1/TSL2561-1/sensor/illuminance 83.102
 omu/enviro-1/TSL2561-1/sensor/unitilluminance  0.884
 omu/enviro-1/RAIN-1/sensor/unitrain 0.914
 omu/enviro-1/RAIN-1/sensor/rain ON
+omu/enviro-1/LIGHTNING-NORMAL/switch/state on
+omu/enviro-1/LIGHTNING-WARNING/switch/state on
 ```
 
 TBD...

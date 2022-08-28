@@ -8,6 +8,7 @@ A simple example demonstrating muwerk's scheduler, munet interface to WLAN, NTP,
 * TSL2561 (Illuminance)
 * BME280 (Temperature, humidity, pressure)
 * ELV lightning warner ("Gewitterwarner GW1"), based on AS3935
+* MH-AD rain sensor
 
 ### Sensor output
 
@@ -23,6 +24,10 @@ omu/enviro-1/TSL2561-1/sensor/lightch0 7078.006
 omu/enviro-1/TSL2561-1/sensor/irch1 3001.998
 omu/enviro-1/TSL2561-1/sensor/illuminance 83.102
 omu/enviro-1/TSL2561-1/sensor/unitilluminance  0.884
+omu/enviro-1/RAIN-1/sensor/unitrain 0.914
+omu/enviro-1/RAIN-1/sensor/rain ON
+omu/enviro-1/LIGHTNING-NORMAL/switch/state on
+omu/enviro-1/LIGHTNING-WARNING/switch/state on
 ```
 
 TBD...

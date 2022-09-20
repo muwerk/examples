@@ -8,6 +8,8 @@
 #include "mup_light.h"
 #include "mup_switch.h"
 
+#include "home_assistant.h"
+
 void appLoop();
 
 ustd::Scheduler sched(10, 16, 32);
@@ -15,41 +17,47 @@ ustd::SerialConsole con;
 ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
+ustd::HomeAssistant ha("SwitchLedBoard", "MuWerk Intl.", "Special Test edition", "0.0.1");
+ustd::Light led1("blueLed", D5, false, 0);
+ustd::Light led2("yellowLed", D6, false, 1);
+ustd::Light led3("greenLed", D7, false, 2);
+ustd::Light led4("redLed", D8, false, 3);
 
-ustd::Light led1("myLed1", D5, false, 0);
-ustd::Light led2("myLed2", D6, false, 1);
-ustd::Light led3("myLed3", D7, false, 2);
-ustd::Light led4("myLed4", D8, false, 3);
-
-ustd::Switch switch1("mySwitch1", D4, ustd::Switch::Mode::Flipflop);
-ustd::Switch switch2("mySwitch2", D3, ustd::Switch::Mode::Flipflop);
+ustd::Switch switch1("blackSwitch", D4);  // , ustd::Switch::Mode::Flipflop);
+ustd::Switch switch2("blueSwitch", D3);   // , ustd::Switch::Mode::Flipflop);
 
 void setup() {
 #ifdef USE_SERIAL_DBG
     Serial.begin(115200);
+    Serial.println("Starting switch_test");
 #endif  // USE_SERIAL_DBG
     con.begin(&sched);
     net.begin(&sched);
     mqtt.begin(&sched);
     ota.begin(&sched);
-    /*int tID = */ sched.add(appLoop, "main", 1000000);
+    ha.begin(&sched, true);  // true: auto-register devices in home-assistant
+
+    sched.add(appLoop, "main", 1000000);
+
     led1.begin(&sched);
     led2.begin(&sched);
     led3.begin(&sched);
     led4.begin(&sched);
 
+    // register leds in home-assistant, they will all be part of device "SwitchLedBoard" as defined above.
+    ha.addLight("blueLed", "Blue Led");
+    ha.addLight("yellowLed", "Yellow Led");
+    ha.addLight("greenLed", "Green Led");
+    ha.addLight("redLed", "Red Led");
+
     switch1.begin(&sched);
     switch2.begin(&sched);
 
-    // generate software phase
-    led1.setMode(ustd::LightController::Mode::Wave, 500, 0.0);
-    // led1.setMinMaxWaveBrightness(0.02, 0.3);
-    led2.setMode(ustd::LightController::Mode::Wave, 500, 0.25);
-    // led2.setMinMaxWaveBrightness(0.02, 0.3);
-    led3.setMode(ustd::LightController::Mode::Wave, 500, 0.5);
-    // led3.setMinMaxWaveBrightness(0.02, 0.3);
-    led4.setMode(ustd::LightController::Mode::Wave, 500, 0.75);
-    // led4.setMinMaxWaveBrightness(0.02, 0.3);
+    // Register switches in same device
+    ha.addSwitch("blackSwitch", "Black Switch", "switch");
+    ha.addSwitch("blueSwitch", "Blue Switch", "switch");
+    // Now Homeassistant will find a new device with four leds and two switches...
+    // Note: it's sometimes necessary to restart home-assistant.
 }
 
 void appLoop() {

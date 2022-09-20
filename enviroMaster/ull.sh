@@ -9,9 +9,9 @@ for f in .pio/libdeps/*; do
         cp -v ../../mupplet-core/src/*.h $f/mupplet-core/src
         cp -v ../../mupplet-core/src/helper/*.h $f/mupplet-core/src/helper
         mkdir -p $f/mupplet-sensor/src
-        mkdir -p $f/mupplet-sensor/src/helpers
+        mkdir -p $f/mupplet-sensor/src/helper
         cp -v ../../mupplet-sensor/src/*.h $f/mupplet-sensor/src
-        cp -v ../../mupplet-sensor/src/helpers/*.h $f/mupplet-sensor/src/helpers
+        cp -v ../../mupplet-sensor/src/helper/*.h $f/mupplet-sensor/src/helper
     fi
 done
 

@@ -80,7 +80,7 @@ void setup() {
 
     lightningNone.begin(&sched);
     lightningActive.begin(&sched);
-    lightningActive.activateCounter(true);  // send `count` messages for every detected lightning
+    lightningActive.activateCounter(true);  // send `counter` messages for every detected lightning
     lightningWarning.begin(&sched);
 
     rainAD.begin(&sched);
@@ -109,7 +109,7 @@ void setup() {
     ha.addBinarySensor("LIGHTNING-WARNING", "state", "Lightning Warning", "", "", "mdi:flash-alert");
     ha.addBinarySensor("LIGHTNING-NORMAL", "state", "Lightning no activity", "", "", "mdi:flash-alert");
     ha.addBinarySensor("LIGHTNING-EVENT", "state", "Lightning Active!", "", "", "mdi:flash-alert");
-    ha.addSensor("LIGHTNING-EVENT", "counter", "Lightning count", "", "N", "mdi:flash-alert");
+    // tuts nicht: ha.addSensor("LIGHTNING-EVENT", "counter", "Lightning count", "", "N", "mdi:flash-alert");
 #endif
 }
 

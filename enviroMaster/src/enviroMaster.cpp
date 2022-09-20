@@ -45,7 +45,7 @@ ustd::PressTempHumBME280 bme280("BME280-1", ustd::PressTempHumBME280::FilterMode
 ustd::Switch lightningNone("LIGHTNING-NORMAL", 32, ustd::Switch::Mode::BinarySensor);   // Normal, no warnings
 ustd::Switch lightningActive("LIGHTNING-EVENT", 33, ustd::Switch::Mode::BinarySensor);  // Active lightning!
 #ifdef LIGHTNING_WARNING_STANDARD
-ustd::Switch lightningWarning("LIGHTNING-WARNING", 35, ustd::Switch::Mode::BinarySensor);
+ustd::Switch lightningWarning("LIGHTNING-WARNING", 34, ustd::Switch::Mode::BinarySensor);
 #else
 ustd::FrequencyCounter lightningWarning("LIGHTNING-STATIC-CHARGE", 34, 1, ustd::FrequencyCounter::MeasureMode::LOWFREQUENCY_MEDIUM);  //  a measure of electrostatic disturbances
 #endif
@@ -91,7 +91,8 @@ void setup() {
     display.setSlotHistorySampleRateMs(3, textMs);    // Geiger counter graphics slot 0, rate update in ms.
     display.setSlotHistorySampleRateMs(4, framesMs);  // Geiger counter graphics slot 1, rate update in ms.
     display.setSlotHistorySampleRateMs(5, framesMs);  // Geiger counter graphics slot 0, rate update in ms.
-    int tID = sched.add(appLoop, "main", 1000000);
+
+    sched.add(appLoop, "main", 1000000);
 
 #ifdef USE_HOMEASSISTANT
     ha.addSensor("GEIGER-1", "frequency", "Geiger counter", "frequency", "Hz", "mdi:radioactive");
@@ -106,6 +107,9 @@ void setup() {
     ha.addSensor("RAIN-1", "unitrain", "Unit-rain", "", "[0..1]", "mdi:weather-pouring");
     ha.addBinarySensor("RAIN-1", "rain", "Rain", "", "", "mdi:weather-pouring");
     ha.addBinarySensor("LIGHTNING-WARNING", "state", "Lightning Warning", "", "", "mdi:flash-alert");
+    ha.addBinarySensor("LIGHTNING-NORMAL", "state", "Lightning no activity", "", "", "mdi:flash-alert");
+    ha.addBinarySensor("LIGHTNING-EVENT", "state", "Lightning Active!", "", "", "mdi:flash-alert");
+    ha.addSensor("LIGHTNING-EVENT", "counter", "Lightning count", "", "N", "mdi:flash-alert");
 #endif
 }
 

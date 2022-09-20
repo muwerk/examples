@@ -1,5 +1,7 @@
 #define LIGHTNING_WARNING_STANDARD
 
+#define USE_HOMEASSISTANT
+
 #include "ustd_platform.h"
 #include "scheduler.h"
 #include "net.h"
@@ -18,6 +20,10 @@
 #include "mup_switch.h"
 #include "mup_rain_ad.h"
 
+#ifdef USE_HOMEASSISTANT
+#include "home_assistant.h"
+#endif
+
 void appLoop();
 
 ustd::Scheduler sched(10, 16, 32);
@@ -25,6 +31,10 @@ ustd::SerialConsole con;
 ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
+
+#ifdef USE_HOMEASSISTANT
+ustd::HomeAssistant ha("EnviroMaster", "MuWerk Intl.", "Test-Version", "0.1.0");
+#endif
 
 ustd::GfxPanel display("display", ustd::GfxDrivers::DisplayType::ST7735, 128, 160, 5, 16, 17, "DE");
 ustd::FrequencyCounter geiger("GEIGER-1", 26, 2, ustd::FrequencyCounter::MeasureMode::LOWFREQUENCY_MEDIUM);
@@ -52,6 +62,11 @@ void setup() {
     net.begin(&sched);
     mqtt.begin(&sched);
     ota.begin(&sched);
+
+#ifdef USE_HOMEASSISTANT
+    ha.begin(&sched, true);
+#endif
+
     display.begin(&sched, &mqtt, true);
     uint32_t framesMs = 1000;
     uint32_t textMs = 2000;
@@ -77,6 +92,21 @@ void setup() {
     display.setSlotHistorySampleRateMs(4, framesMs);  // Geiger counter graphics slot 1, rate update in ms.
     display.setSlotHistorySampleRateMs(5, framesMs);  // Geiger counter graphics slot 0, rate update in ms.
     int tID = sched.add(appLoop, "main", 1000000);
+
+#ifdef USE_HOMEASSISTANT
+    ha.addSensor("GEIGER-1", "frequency", "Geiger counter", "frequency", "Hz", "mdi:radioactive");
+    ha.addSensor("GAMMA-1", "gamma10minavg", "Gamma 10min avg", "frequency", "Hz*60", "mdi:counter");
+    ha.addSensor("GAMMA-1", "gamma1minavg", "Gamma 1min avg", "frequency", "Hz*60", "mdi:counter");
+    ha.addSensor("BME280-1", "temperature", "Temperature", "temperature", "°C");
+    ha.addSensor("BME280-1", "pressureNN", "Pressure NN", "pressure", "hPa");
+    ha.addSensor("BME280-1", "pressure", "Pressure", "pressure", "hPa");
+    ha.addSensor("BME280-1", "humidity", "Humidity", "humidity", "%");
+    ha.addSensor("TSL2561-1", "illuminance", "Illuminance", "lx");
+    ha.addSensor("TSL2561-1", "unitilluminance", "Unit-Illuminance", "", "[0..1]", "mdi:sun-wireless");
+    ha.addSensor("RAIN-1", "unitrain", "Unit-rain", "", "[0..1]", "mdi:weather-pouring");
+    ha.addBinarySensor("RAIN-1", "rain", "Rain", "", "", "mdi:weather-pouring");
+    ha.addBinarySensor("LIGHTNING-WARNING", "state", "Lightning Warning", "", "", "mdi:flash-alert");
+#endif
 }
 
 void appLoop() {

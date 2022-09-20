@@ -7,6 +7,7 @@ for f in .pio/libdeps/*; do
         cp -v ../../muwerk/*.h $f/muwerk/
         cp -v ../../munet/*.h $f/munet/
         cp -v ../../mupplet-core/src/*.h $f/mupplet-core/src
+        cp -v ../../mupplet-core/src/helper/*.h $f/mupplet-core/src/helper
         mkdir -p $f/mupplet-sensor/src
         mkdir -p $f/mupplet-sensor/src/helpers
         cp -v ../../mupplet-sensor/src/*.h $f/mupplet-sensor/src

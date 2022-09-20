@@ -42,10 +42,10 @@ ustd::GammaGDK101 gammaG("GAMMA-1", ustd::GammaGDK101::FilterMode::FAST);
 ustd::PressTempHumBME280 bme280("BME280-1", ustd::PressTempHumBME280::FilterMode::FAST);
 
 // Ports 32-34 connected to "ELV Gewitterwarner GW2", an AS3935 based lighning detector.
-ustd::Switch lightningNone("LIGHTNING-NORMAL", 32);   // Normal, no warnings
-ustd::Switch lightningActive("LIGHTNING-EVENT", 33);  // Active lightning!
+ustd::Switch lightningNone("LIGHTNING-NORMAL", 32, ustd::Switch::Mode::BinarySensor);   // Normal, no warnings
+ustd::Switch lightningActive("LIGHTNING-EVENT", 33, ustd::Switch::Mode::BinarySensor);  // Active lightning!
 #ifdef LIGHTNING_WARNING_STANDARD
-ustd::Switch lightningWarning("LIGHTNING-WARNING", 35);
+ustd::Switch lightningWarning("LIGHTNING-WARNING", 35, ustd::Switch::Mode::BinarySensor);
 #else
 ustd::FrequencyCounter lightningWarning("LIGHTNING-STATIC-CHARGE", 34, 1, ustd::FrequencyCounter::MeasureMode::LOWFREQUENCY_MEDIUM);  //  a measure of electrostatic disturbances
 #endif

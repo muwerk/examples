@@ -102,7 +102,7 @@ void setup() {
     ha.addSensor("BME280-1", "pressureNN", "Pressure NN", "pressure", "hPa");
     ha.addSensor("BME280-1", "pressure", "Pressure", "pressure", "hPa");
     ha.addSensor("BME280-1", "humidity", "Humidity", "humidity", "%");
-    ha.addSensor("TSL2561-1", "illuminance", "Illuminance", "lx");
+    ha.addSensor("TSL2561-1", "illuminance", "Illuminance", "illuminance", "lx");
     ha.addSensor("TSL2561-1", "unitilluminance", "Unit-Illuminance", "", "[0..1]", "mdi:sun-wireless");
     ha.addSensor("RAIN-1", "unitrain", "Unit-rain", "", "[0..1]", "mdi:weather-pouring");
     ha.addBinarySensor("RAIN-1", "rain", "Rain", "", "", "mdi:weather-pouring");

@@ -9,6 +9,7 @@ for f in .pio/libdeps/*; do
         cp -v ../../mupplet-core/src/*.h $f/mupplet-core/src
         mkdir -p $f/mupplet-sensor/src
         cp -v ../../mupplet-sensor/src/*.h $f/mupplet-sensor/src
+        cp -v ../../mupplet-display/src/*.h $f/mupplet-display/src
     fi
 done
 

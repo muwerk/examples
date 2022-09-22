@@ -6,7 +6,6 @@
 
 #include "console.h"
 #include "mup_temphum_dht.h"
-#include "mup_oled.h"
 
 void appLoop();
 
@@ -15,15 +14,12 @@ ustd::SerialConsole con;
 ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
-ustd::SensorDisplay display("display",128,64,0x3c);
-
 
 #ifdef __ESP32__
-ustd::TempHumDHT dht("DHT-1", 5, 0);    // name, pin, unique interrupt-id (0..9)
+ustd::TempHumDHT dht("DHT-1", 5, 0);  // name, pin, unique interrupt-id (0..9)
 #else
 ustd::TempHumDHT dht("DHT-1", D4, 0);  // name, pin, unique interrupt-id (0..9)
 #endif
-
 
 void setup() {
 #ifdef USE_SERIAL_DBG
@@ -33,7 +29,6 @@ void setup() {
     net.begin(&sched);
     mqtt.begin(&sched);
     ota.begin(&sched);
-    display.begin(&sched, &mqtt);
     int tID = sched.add(appLoop, "main", 1000000);
 
     // sensors start measuring temperature (and humidity)

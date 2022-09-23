@@ -1,10 +1,6 @@
 # examples
 
-**Note:** This is **unreleased software**, since the corresponding mupplet-code library is not yet released.
-
-Complete examples using muwerk's ustd, muwerk, munet, and mupplet-core libraries
-
-**Note:** The 'old' examples folder has been moved to [Research-Examples](https://github.com/muwerk/Research-Examples)
+Complete examples using muwerk's [ustd](https://github.com/muwerk/ustd), [muwerk](https://github.com/muwerk/muwerk), [munet](https://github.com/muwerk/munet), and [mupplet-core](https://github.com/muwerk/mupplet-core), [mupplet-sensor](https://github.com/muwerk/mupplet-sensor), and [mupplet-display](https://github.com/muwerk/mupplet-display) libraries
 
 The following examples are available
 
@@ -23,3 +19,7 @@ The following examples are available
 <img src="https://github.com/muwerk/examples/blob/master/Resources/Matrix-8x8-MAX7219.jpg" width="14%">
 
 * [ledMatrix](https://github.com/muwerk/examples/tree/master/ledMatrix) Led matrix display example
+
+## History
+
+- **Note:** The 'old' examples folder has been moved to [Research-Examples](https://github.com/muwerk/Research-Examples), those projects are no longer maintained.

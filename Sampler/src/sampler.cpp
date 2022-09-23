@@ -1,7 +1,7 @@
 #include "ustd_platform.h"
 #include "scheduler.h"
 
-#include "../../../Research-mupplets/mp3.h"
+#include "mp3.h"
 
 #include "mup_light.h"
 #include "mupplet_core.h"
@@ -54,7 +54,7 @@ void setup() {
     // Configure and start PWM
     // MyTim->setPWM(channel, pwmPin, 5, 10, NULL, NULL); // No callback required, we can simplify the function call
     analogWriteFrequency(440);
-    pMyTim->setPWM(channel, pwmPin, 50, 50); // 440 Hertz, 50% dutycycle
+    pMyTim->setPWM(channel, pwmPin, 50, 50);  // 440 Hertz, 50% dutycycle
 }
 
 void appLoop() {

@@ -1,0 +1,6 @@
+.vscode
+.pio
+data/net.json
+data/mqtt.json
+data/gosund.json
+lsp.log

@@ -35,7 +35,7 @@ ustd::PowerBl0937 power("Power", 4, 5, 12, 2, 3);
 ustd::jsonfile jf;
 
 void switch_messages(String topic, String msg, String originator) {
-    if (topic == "mySwitch/switch/state") {
+    if (topic == "Switch/switch/state") {
         if (msg == "on") {
             led1.set(true);
             relay.set(true);
@@ -91,7 +91,7 @@ void setup() {
     pHa->addSensor("Power", "voltage", "Voltage", "voltage", "V");
     pHa->addSensor("Power", "current", "Current", "current", "A");
 
-    sched.subscribe(tID, "mySwitch/switch/state", switch_messages);
+    sched.subscribe(tID, "Switch/switch/state", switch_messages);
 }
 
 void appLoop() {

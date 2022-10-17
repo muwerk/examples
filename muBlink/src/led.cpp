@@ -37,12 +37,17 @@ ustd::Mqtt mqtt;
 ustd::Ota ota;
 #endif
 
-#if defined(__ESP__) && !defined(__ESP32__)
+#if defined(__ESP__) && !defined(__ESP32__) && !defined(__ESP32_RISC__)
 ustd::Light led1("myLed1", D5, false);
 ustd::Light led2("myLed2", D6, false);
 #endif
 
 #ifdef __ESP32__
+ustd::Light led1("myLed1", 12, false);
+ustd::Light led2("myLed2", 27, false);
+#endif
+
+#ifdef __ESP32_RISC__
 ustd::Light led1("myLed1", 12, false);
 ustd::Light led2("myLed2", 27, false);
 #endif

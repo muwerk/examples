@@ -1,7 +1,9 @@
+#define USE_SERIAL_DBG 1
+
 #include "ustd_platform.h"
 #include "scheduler.h"
 
-#ifdef USD_FEATURE_NET
+#ifdef USTD_FEATURE_NETWORK
 #include "net.h"
 #include "mqtt.h"
 #include "ota.h"
@@ -9,6 +11,10 @@
 
 #if USTD_FEATURE_MEMORY >= USTD_FEATURE_MEM_8K
 #include "console.h"
+#endif
+
+#ifndef LED_BUILTIN
+#define LED_BUILTIN -1
 #endif
 
 #if USTD_FEATURE_MEMORY < USTD_FEATURE_MEM_2K
@@ -31,7 +37,7 @@ ustd::Scheduler sched(10, 16, 32);
 ustd::SerialConsole con;
 #endif
 
-#ifdef USTD_FEATURE_NET
+#ifdef USTD_FEATURE_NETWORK
 ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
@@ -48,8 +54,8 @@ ustd::Light led2("myLed2", 27, false);
 #endif
 
 #ifdef __ESP32_RISC__
-ustd::Light led1("myLed1", 12, false);
-ustd::Light led2("myLed2", 27, false);
+ustd::Light led1("myLed1", LED_BUILTIN, false);
+ustd::Light led2("myLed2", 2, false);
 #endif
 
 #if defined(__UNO__)
@@ -103,7 +109,7 @@ void setup() {
     Serial.begin(115200);
     con.begin(&sched);
 #endif
-#ifdef USTD_FEATURE_NET
+#ifdef USTD_FEATURE_NETWORK
     net.begin(&sched);
     mqtt.begin(&sched);
     ota.begin(&sched);

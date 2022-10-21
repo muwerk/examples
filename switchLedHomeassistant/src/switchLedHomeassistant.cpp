@@ -7,6 +7,7 @@
 #include "console.h"
 #include "mup_light.h"
 #include "mup_switch.h"
+#include "mup_neopixel.h"
 
 #include "home_assistant.h"
 
@@ -21,7 +22,7 @@ ustd::HomeAssistant ha("SwitchLedBoard", "MuWerk Intl.", "Special Test edition",
 ustd::Light led1("blueLed", D5, false, 0);
 ustd::Light led2("yellowLed", D6, false, 1);
 ustd::Light led3("greenLed", D7, false, 2);
-ustd::Light led4("redLed", D8, false, 3);
+ustd::NeoPixel pix1("neoPixel", D8, 1, NEO_RGB + NEO_KHZ400);
 
 ustd::Switch switch1("blackSwitch", D4);  // , ustd::Switch::Mode::Flipflop);
 ustd::Switch switch2("blueSwitch", D3);   // , ustd::Switch::Mode::Flipflop);
@@ -42,13 +43,14 @@ void setup() {
     led1.begin(&sched);
     led2.begin(&sched);
     led3.begin(&sched);
-    led4.begin(&sched);
+    pix1.begin(&sched);
 
     // register leds in home-assistant, they will all be part of device "SwitchLedBoard" as defined above.
     ha.addLight("blueLed", "Blue Led");
     ha.addLight("yellowLed", "Yellow Led");
     ha.addLight("greenLed", "Green Led");
-    ha.addLight("redLed", "Red Led");
+    ha.addLight("neoPixel", "NeoPixel", ustd::HomeAssistant::LightRGB);
+    pix1.color(0, 200, 0);
 
     switch1.begin(&sched);
     switch2.begin(&sched);

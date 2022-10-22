@@ -1,4 +1,5 @@
 #define USE_SERIAL_DBG 1
+#define OPTION_HOMEASSISTANT
 
 #include "ustd_platform.h"
 #include "scheduler.h"
@@ -20,6 +21,10 @@
 #include "mupplet_core.h"
 #include "mup_neopixel.h"
 
+#ifdef OPTION_HOMEASSISTANT
+#include "home_assistant.h"
+#endif
+
 void appLoop();
 
 #if USTD_FEATURE_MEMORY < USTD_FEATURE_MEM_8K
@@ -39,7 +44,11 @@ ustd::Mqtt mqtt;
 ustd::Ota ota;
 #endif
 
-ustd::NeoPixel pix1("pix1", 2);
+#ifdef OPTION_HOMEASSISTANT
+ustd::HomeAssistant ha("Esp32C3TestBoard", "MuWerk Intl.", "Special Test edition", "0.0.1");
+#endif
+
+ustd::NeoPixel pix1("pix1", 2, 1, NEO_GRB + NEO_KHZ800);
 
 void setup() {
     Serial.begin(115200);
@@ -54,7 +63,12 @@ void setup() {
     ota.begin(&sched);
 #endif
     pix1.begin(&sched);
+#ifdef OPTION_HOMEASSISTANT
+    ha.begin(&sched, true);
+    ha.addLight("pix1", "c3pixel", ustd::HomeAssistant::LightRGB);
+#endif
     pix1.pixel(0, 0, 0, 255);
+
     // seq={{0,0x010203},{1,0x020301},{-1,100},{-2,100}}
     sched.add(appLoop, "1", 1000000L);
 }

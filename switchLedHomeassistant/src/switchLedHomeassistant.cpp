@@ -22,8 +22,8 @@ ustd::HomeAssistant ha("SwitchLedBoard", "MuWerk Intl.", "Special Test edition",
 ustd::Light led1("blueLed", D5, false, 0);
 // ustd::Light led2("yellowLed", D6, false, 1);
 ustd::Light led3("greenLed", D7, false, 2);
-ustd::NeoPixel pix1("neoPixel", D8, 1, NEO_RGB + NEO_KHZ800);
-ustd::NeoPixel pix2("neopix8", D6, 8, NEO_GRB + NEO_KHZ800);
+ustd::NeoPixel pix1("neoPixel", D8, 1, 1, NEO_RGB + NEO_KHZ800);
+ustd::NeoPixel pix2("neopix8", D6, 1, 8, NEO_GRB + NEO_KHZ800);
 ustd::Switch switch1("blackSwitch", D4);  // , ustd::Switch::Mode::Flipflop);
 ustd::Switch switch2("blueSwitch", D3);   // , ustd::Switch::Mode::Flipflop);
 
@@ -51,8 +51,10 @@ void setup() {
     ha.addLight("greenLed", "Green Led");
     ha.addLight("neoPixel", "NeoPixel", ustd::HomeAssistant::LightRGB);
     ha.addLight("neopix8", "NeoPixel8", ustd::HomeAssistant::LightRGB);
-    pix1.color(0, 0, 255);
-    pix2.color(0, 0, 255);
+    // pix1.color(0, 0, 255);
+    // pix2.color(0, 0, 255);
+    pix1.setEffect(ustd::SpecialEffects::EffectType::ButterLamp);
+    pix2.setEffect(ustd::SpecialEffects::EffectType::ButterLamp);
 
     switch1.begin(&sched);
     switch2.begin(&sched);

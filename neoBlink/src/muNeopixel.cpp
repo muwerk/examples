@@ -54,15 +54,13 @@ void setup() {
     ota.begin(&sched);
 #endif
     pix1.begin(&sched);
-    pix1.pixel(0, 128, 0, 0);
+    pix1.pixel(0, 0, 0, 255);
     // seq={{0,0x010203},{1,0x020301},{-1,100},{-2,100}}
     sched.add(appLoop, "1", 1000000L);
 }
 
 bool bl = false;
 void appLoop() {
-    bl = !bl;
-    pix1.set(0, bl);
 }
 
 // Never add code to this loop, use appLoop() instead.

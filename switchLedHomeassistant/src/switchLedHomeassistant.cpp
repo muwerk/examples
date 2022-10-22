@@ -50,7 +50,7 @@ void setup() {
     ha.addLight("yellowLed", "Yellow Led");
     ha.addLight("greenLed", "Green Led");
     ha.addLight("neoPixel", "NeoPixel", ustd::HomeAssistant::LightRGB);
-    pix1.color(0, 200, 0);
+    pix1.color(0, 0, 255);
 
     switch1.begin(&sched);
     switch2.begin(&sched);

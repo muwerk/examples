@@ -8,6 +8,7 @@ for f in .pio/libdeps/*; do
         cp -v ../../munet/*.h $f/munet/
         cp -v ../../mupplet-core/src/*.h $f/mupplet-core/src
         cp -v ../../mupplet-core/src/helper/*.h $f/mupplet-core/src/helper
+        cp -v ../../mupplet-sensor/src/*.h $f/mupplet-sensor/src
     fi
 done
 

@@ -18,7 +18,7 @@ ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
 
-ustd::IlluminanceLdr ldr("ldr", A0);
+ustd::IlluminanceLdr ldr("ldr", A0, ustd::IlluminanceLdr::FilterMode::LONGTERM, false);
 ustd::NeoPixel lamp("butterlamp", 15, 4, 8, NEO_GRB + NEO_KHZ800);
 
 void setup() {
@@ -34,8 +34,8 @@ void setup() {
     ustd::jsonfile jf;
     bool hasLdr = jf.readBool("butterlamp/has_ldr", false);
     String friendlyName = jf.readString("butterlamp/friendly_name", "butterlamp");
-    bool candleTimer = jf.readBool("butterlamp/candle_timer", true);
-    bool registerHomeAssistant = jf.readBool("butterlamp/homeassistant", false);
+    bool candleTimer = jf.readBool("butterlamp/candle_timer", false);
+    bool registerHomeAssistant = jf.readBool("butterlamp/homeassistant", true);
     String startTime, endTime;
     int sh, sm, eh, em;
     if (candleTimer) {

@@ -51,13 +51,13 @@ void setup() {
             pHa->addSensor("ldr", "unitilluminance", "LDR-" + friendlyName, "illuminance", "[0..1]", "mdi:sun-wireless");
         }
     }
+    lamp.setEffect(ustd::SpecialEffects::EffectType::ButterLamp, true);
     if (candleTimer) {
         String startTime, endTime;
         startTime = jf.readString("neocandle/start_time", "18:00");
         endTime = jf.readString("neocandle/end_time", "0:00");
-        lamp.setSchedule(startTime, endTime);
+        lamp.setSchedule(true, startTime, endTime);
     }
-    lamp.setEffect(ustd::SpecialEffects::EffectType::ButterLamp, true);
 }
 
 void appLoop() {

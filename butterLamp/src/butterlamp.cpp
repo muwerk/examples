@@ -54,7 +54,7 @@ void setup() {
     if (registerHomeAssistant) {
         ustd::HomeAssistant *pHa = new ustd::HomeAssistant(friendlyName, "MuWerk Intl.", "Buddha edition", "0.1.0");
         pHa->begin(&sched, true);  // true: auto-register devices in home-assistant
-        pHa->addLight("butterlamp", friendlyName, ustd::HomeAssistant::LightRGB);
+        pHa->addLight("butterlamp", friendlyName, ustd::HomeAssistant::LightRGB, "", "", "Static, Butterlamp");
         if (hasLdr) {
             pHa->addSensor("ldr", "unitilluminance", "LDR-" + friendlyName, "illuminance", "[0..1]", "mdi:sun-wireless");
         }

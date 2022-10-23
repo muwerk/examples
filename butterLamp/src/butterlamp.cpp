@@ -36,15 +36,7 @@ void setup() {
     String friendlyName = jf.readString("butterlamp/friendly_name", "butterlamp");
     bool candleTimer = jf.readBool("butterlamp/candle_timer", false);
     bool registerHomeAssistant = jf.readBool("butterlamp/homeassistant", true);
-    String startTime, endTime;
-    int sh, sm, eh, em;
     if (candleTimer) {
-        startTime = jf.readString("neocandle/start_time", "18:00");
-        endTime = jf.readString("neocandle/end_time", "0:00");
-        if (!ustd::Astro::parseHourMinuteString(startTime, &sh, &sm))
-            candleTimer = false;
-        if (!ustd::Astro::parseHourMinuteString(endTime, &eh, &em))
-            candleTimer = false;
     }
     sched.add(appLoop, "main", 1000000);
     lamp.begin(&sched);
@@ -54,10 +46,16 @@ void setup() {
     if (registerHomeAssistant) {
         ustd::HomeAssistant *pHa = new ustd::HomeAssistant(friendlyName, "MuWerk Intl.", "Buddha edition", "0.1.0");
         pHa->begin(&sched, true);  // true: auto-register devices in home-assistant
-        pHa->addLight("butterlamp", friendlyName, ustd::HomeAssistant::LightRGB, "", "", "Static, Butterlamp");
+        pHa->addLight("butterlamp", friendlyName, ustd::HomeAssistant::LightRGB, "", "", lamp.getEffectList());
         if (hasLdr) {
             pHa->addSensor("ldr", "unitilluminance", "LDR-" + friendlyName, "illuminance", "[0..1]", "mdi:sun-wireless");
         }
+    }
+    if (candleTimer) {
+        String startTime, endTime;
+        startTime = jf.readString("neocandle/start_time", "18:00");
+        endTime = jf.readString("neocandle/end_time", "0:00");
+        lamp.setSchedule(startTime, endTime);
     }
     lamp.setEffect(ustd::SpecialEffects::EffectType::ButterLamp);
 }

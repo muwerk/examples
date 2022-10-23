@@ -1,0 +1,6 @@
+.pio
+.vscode/
+data/net.json
+data/mqtt.json
+data/butterlamp.json
+.DS_Store

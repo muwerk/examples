@@ -1,0 +1,8 @@
+{
+    "has_ldr": true,
+    "candle_timer": true,
+    "friendly_name": "Butterlamp",
+    "homeassistant": true,
+    "start_time": "18:00",
+    "end_time": "21:30"
+}

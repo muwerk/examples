@@ -57,7 +57,7 @@ void setup() {
         endTime = jf.readString("neocandle/end_time", "0:00");
         lamp.setSchedule(startTime, endTime);
     }
-    lamp.setEffect(ustd::SpecialEffects::EffectType::ButterLamp);
+    lamp.setEffect(ustd::SpecialEffects::EffectType::ButterLamp, true);
 }
 
 void appLoop() {

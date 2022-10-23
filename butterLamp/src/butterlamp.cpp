@@ -17,7 +17,6 @@ ustd::SerialConsole con;
 ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
-ustd::HomeAssistant ha("SwitchLedBoard", "MuWerk Intl.", "Special Test edition", "0.0.1");
 
 ustd::IlluminanceLdr ldr("ldr", A0);
 ustd::NeoPixel lamp("butterlamp", 15, 4, 8, NEO_GRB + NEO_KHZ800);
@@ -31,7 +30,6 @@ void setup() {
     net.begin(&sched);
     mqtt.begin(&sched);
     ota.begin(&sched);
-    ha.begin(&sched, true);  // true: auto-register devices in home-assistant
 
     ustd::jsonfile jf;
     bool hasLdr = jf.readBool("butterlamp/has_ldr", false);
@@ -54,9 +52,11 @@ void setup() {
         ldr.begin(&sched);
     }
     if (registerHomeAssistant) {
-        ha.addLight("butterlamp", friendlyName, ustd::HomeAssistant::LightRGB);
+        ustd::HomeAssistant *pHa = new ustd::HomeAssistant(friendlyName, "MuWerk Intl.", "Buddha edition", "0.1.0");
+        pHa->begin(&sched, true);  // true: auto-register devices in home-assistant
+        pHa->addLight("butterlamp", friendlyName, ustd::HomeAssistant::LightRGB);
         if (hasLdr) {
-            ha.addSensor("ldr", "unitilluminance", "LDR-" + friendlyName, "illuminance", "[0..1]", "mdi:sun-wireless");
+            pHa->addSensor("ldr", "unitilluminance", "LDR-" + friendlyName, "illuminance", "[0..1]", "mdi:sun-wireless");
         }
     }
     lamp.setEffect(ustd::SpecialEffects::EffectType::ButterLamp);

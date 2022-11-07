@@ -24,7 +24,7 @@ ustd::NeoPixel lamp("butterlamp", 15, 4, 8, NEO_GRB + NEO_KHZ800);
 void setup() {
 #ifdef USE_SERIAL_DBG
     Serial.begin(115200);
-    Serial.println("Starting switch_test");
+    Serial.println("Starting Butterlamp");
 #endif  // USE_SERIAL_DBG
     con.begin(&sched);
     net.begin(&sched);
@@ -54,8 +54,11 @@ void setup() {
     lamp.setEffect(ustd::SpecialEffects::EffectType::ButterLamp, true);
     if (candleTimer) {
         String startTime, endTime;
-        startTime = jf.readString("neocandle/start_time", "18:00");
-        endTime = jf.readString("neocandle/end_time", "0:00");
+        startTime = jf.readString("butterlamp/start_time", "18:00");
+        endTime = jf.readString("butterlamp/end_time", "0:00");
+#ifdef USE_SERIAL_DBG
+        Serial.println("Candle timer: " + startTime + " - " + endTime);
+#endif  // USE_SERIAL_DBG
         lamp.setSchedule(startTime, endTime);
     }
 }

@@ -56,7 +56,7 @@ void setup() {
         String startTime, endTime;
         startTime = jf.readString("neocandle/start_time", "18:00");
         endTime = jf.readString("neocandle/end_time", "0:00");
-        lamp.setSchedule(true, startTime, endTime);
+        lamp.setSchedule(startTime, endTime);
     }
 }
 

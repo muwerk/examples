@@ -57,7 +57,7 @@ void setup() {
         startTime = jf.readString("butterlamp/start_time", "18:00");
         endTime = jf.readString("butterlamp/end_time", "0:00");
 #ifdef USE_SERIAL_DBG
-        Serial.println("Candle timer: " + startTime + " - " + endTime);
+        Serial.println("Candle " + friendlyName + " timer: " + startTime + " - " + endTime);
 #endif  // USE_SERIAL_DBG
         lamp.setSchedule(startTime, endTime);
     }

@@ -1,3 +1,5 @@
+#define USE_HOMEASSISTANT
+
 #include "ustd_platform.h"
 #include "scheduler.h"
 #include "net.h"
@@ -11,7 +13,9 @@
 #include "mup_illuminance_ldr.h"
 #include "mup_presstemp_bmp180.h"
 #include "mup_gfx_panel.h"
+#ifdef USE_HOMEASSISTANT
 #include "home_assistant.h"
+#endif
 
 void appLoop();
 
@@ -20,6 +24,10 @@ ustd::SerialConsole con;
 ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
+
+#ifdef USE_HOMEASSISTANT
+ustd::HomeAssistant ha("Home-Sensor-1", "MuWerk Intl.", "Test-Version", "0.1.0");
+#endif
 
 // starts listening to mqtt messages to <hostname>/doctor/i2cinfo/get,
 // then sends i2c used addresses, errors and device-count out.
@@ -43,12 +51,24 @@ void setup() {
     // sensors start measuring temperature (and humidity)
     Wire.begin();
     doctor.begin(&sched, &Wire);
+#ifdef USE_HOMEASSISTANT
+    ha.begin(&sched, true);
+#endif
+
     dht.begin(&sched);
     bmp.begin(&sched, &Wire);
-    bmp.setReferenceAltitude(520);
+    bmp.setReferenceAltitude(518);
     ldr.begin(&sched);
 
     displayOled.begin(&sched, &mqtt);
+#ifdef USE_HOMEASSISTANT
+    ha.addSensor("DHT-1", "temperature", "Temperature", "temperature", "°C");
+    ha.addSensor("DHT-1", "humidity", "Humidity", "humidity", "%");
+    ha.addSensor("LDR-1", "unitilluminance", "Unit-Illuminance", "", "[0..1]", "mdi:sun-wireless");
+    ha.addSensor("BMP180-1", "temperature", "Temperature", "temperature", "°C");
+    ha.addSensor("BMP180-1", "pressureNN", "Pressure NN", "pressure", "hPa");
+    ha.addSensor("BMP180-1", "pressure", "Pressure", "pressure", "hPa");
+#endif
 }
 
 void appLoop() {

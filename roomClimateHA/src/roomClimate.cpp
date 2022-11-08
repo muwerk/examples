@@ -54,14 +54,14 @@ void setup() {
     ha.begin(&sched, true);
 #endif
 
-    bme.begin(&sched);
+    bme.begin(&sched, &Wire);
     co2.begin(&sched, &Wire);
     bme.setReferenceAltitude(518);
 
     displayOled.begin(&sched, &mqtt);
 #ifdef USE_HOMEASSISTANT
-    ha.addSensor("CCS811-1", "co2", "CO2", "co2", "ppm");
-    ha.addSensor("CCS811-1", "voc", "VOC", "voc", "ppb");
+    ha.addSensor("CCS811-1", "co2", "CO2", "carbon_dioxide", "ppm");
+    ha.addSensor("CCS811-1", "voc", "VOC", "volatile_organic_compounds", "ppb");
     ha.addSensor("BME280-1", "temperature", "Temperature", "temperature", "°C");
     ha.addSensor("BME280-1", "humidity", "Humidity", "humidity", "%");
     ha.addSensor("BME280-1", "pressureNN", "Pressure NN", "pressure", "hPa");

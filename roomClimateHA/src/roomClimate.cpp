@@ -45,7 +45,7 @@ void setup() {
     net.begin(&sched);
     mqtt.begin(&sched);
     ota.begin(&sched);
-    int tID = sched.add(appLoop, "main", 1000000);
+    /*int tID =*/sched.add(appLoop, "main", 1000000);
 
     // sensors start measuring temperature (and humidity)
     Wire.begin();

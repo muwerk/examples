@@ -12,6 +12,7 @@
 #include "mup_temphum_dht.h"
 #include "mup_illuminance_ldr.h"
 #include "mup_presstemp_bmp180.h"
+#include "mup_co2_ccs811.h"
 #include "mup_gfx_panel.h"
 #ifdef USE_HOMEASSISTANT
 #include "home_assistant.h"
@@ -35,6 +36,7 @@ ustd::I2CDoctor doctor("doctor");
 
 ustd::TempHumDHT dht("DHT-1", D5, 0);  // name, pin, unique interrupt-id (0..9)
 ustd::PressTempBMP180 bmp("BMP180-1");
+ustd::CO2CCS811 co2("CCS811-1", ustd::CO2CCS811::FilterMode::MEDIUM, 0x5A, "DHT-1/sensor/temperature", "DHT-1/sensor/humidity");
 ustd::IlluminanceLdr ldr("LDR-1", A0);
 ustd::GfxPanel displayOled("display", ustd::GfxDrivers::DisplayType::SSD1306, 128, 64, 0x3c, &Wire, "DE");
 
@@ -59,6 +61,7 @@ void setup() {
     bmp.begin(&sched, &Wire);
     bmp.setReferenceAltitude(518);
     ldr.begin(&sched);
+    co2.begin(&sched, &Wire);
 
     displayOled.begin(&sched, &mqtt);
 #ifdef USE_HOMEASSISTANT
@@ -68,6 +71,8 @@ void setup() {
     ha.addSensor("BMP180-1", "temperature", "Temperature", "temperature", "°C");
     ha.addSensor("BMP180-1", "pressureNN", "Pressure NN", "pressure", "hPa");
     ha.addSensor("BMP180-1", "pressure", "Pressure", "pressure", "hPa");
+    ha.addSensor("CCS811-1", "co2", "CO2", "carbon_dioxide", "ppm");
+    ha.addSensor("CCS811-1", "voc", "VOC", "volatile_organic_compounds", "ppb");
 #endif
 }
 

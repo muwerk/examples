@@ -1,8 +1,8 @@
-DHT temperature sensor
-======================
+Multi-sensor room climate
+=========================
 
 A simple example demonstrating muwerk's scheduler, munet interface to WLAN, NTP, OTA and MQTT, 
-with DHT22 temperature, humidity, BMP180 temperature, pressure and LDR resistor with Oled display.
+with DHT22 temperature, humidity, BMP180 temperature, pressure, CCS811 CO2 and VOC, and LDR resistor with Oled display.
 
 TBD.
 

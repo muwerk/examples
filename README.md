@@ -20,6 +20,10 @@ The following examples are available
 
 * [ledMatrix](https://github.com/muwerk/examples/tree/master/ledMatrix) Led matrix display example
 
+<img src="https://github.com/muwerk/examples/blob/master/sensorclock/resources/sensorclock_breadboard.jpg" width="30%"> <img src="https://github.com/muwerk/examples/blob/master/sensorclock/resources/sensorclock.jpg" width="15%">
+
+* [sensorclock](https://github.com/muwerk/examples/tree/master/sensorclock) A 7-segment led clock with multiple environment sensors, connected to Home-Assistant
+
 ## History
 
 - **Note:** The 'old' examples folder has been moved to [Research-Examples](https://github.com/muwerk/Research-Examples), those projects are no longer maintained.

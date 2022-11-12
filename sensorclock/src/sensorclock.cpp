@@ -19,6 +19,7 @@
 #include "i2cdoctor.h"
 
 #include "mup_gfx_panel.h"
+#include "home_assistant.h"
 
 void appLoop();
 
@@ -29,11 +30,12 @@ ustd::Net net(LED_BUILTIN);
 ustd::Mqtt mqtt;
 ustd::Ota ota;
 ustd::Web web;
+ustd::HomeAssistant ha("Sensorclock", "MuWerk Intl.", "SC-Revisited", "1.1.0");
 
 ustd::I2CDoctor doctor("doctor");
-ustd::IlluminanceTSL2561 illumin("TSL2561-1", ustd::IlluminanceTSL2561::FilterMode::FAST, ustd::IlluminanceTSL2561::IntegrationMode::LONGTERM402ms, ustd::IlluminanceTSL2561::GainMode::LOW1x);
-ustd::TempHumDHT dht("dht22", 0, 0, ustd::TempHumDHT::DHTType::DHT22);  // port 0 == D3
-ustd::PressTempBMP180 pressure("bmp085");
+ustd::IlluminanceTSL2561 illumin("TSL2561-1", ustd::IlluminanceTSL2561::FilterMode::FAST, ustd::IlluminanceTSL2561::IntegrationMode::LONGTERM402ms, ustd::IlluminanceTSL2561::GainMode::HIGH16x);
+ustd::TempHumDHT dht("DHT22-1", 0, 0, ustd::TempHumDHT::DHTType::DHT22);  // port 0 == D3
+ustd::PressTempBMP180 pressure("BMP085-1");
 #ifdef I2C_D1_D2
 ustd::Clock7Seg clock7("clock", 0x70, D5, true, "TSL2561-1/sensor/unitilluminance");
 ustd::Switch sw1("sensorclock1", D7);
@@ -42,7 +44,7 @@ ustd::GfxPanel display("display", ustd::GfxDrivers::DisplayType::SSD1306, 128, 6
 #else
 ustd::Clock7Seg clock7("clock", 0x70, 14, true, "tsl2561/sensor/unitilluminance");
 #endif
-ustd::CO2CCS811 airq("air", ustd::CO2CCS811::FilterMode::MEDIUM, 0x5a, "dht22/sensor/temperature", "dht22/sensor/humidity");
+ustd::CO2CCS811 airq("CCS811-1", ustd::CO2CCS811::FilterMode::MEDIUM, 0x5a, "DHT22-1/sensor/temperature", "DHT22-1/sensor/humidity");
 
 void setup() {
 #ifdef USE_SERIAL_DBG
@@ -71,16 +73,24 @@ void setup() {
     illumin.begin(&sched);
     dht.begin(&sched);
     pressure.begin(&sched);
+    pressure.setReferenceAltitude(518.0);  // 518m above NN, now we also receive PressureNN values for sea level.
 #ifdef I2C_D1_D2
     sw1.begin(&sched);
     sw2.begin(&sched);
 #endif
     airq.begin(&sched);
 
-    // illumin.registerHomeAssistant("Illuminance", "Sensor Uhr");
-    // dht.registerHomeAssistant("Klima", "Sensor Uhr");
-    // pressure.registerHomeAssistant("Luftdruck", "Sensor Uhr");
-    // airq.registerHomeAssistant("Luftquali", "Sensor Uhr");
+    ha.begin(&sched, true);
+
+    ha.addSensor("BMP085-1", "temperature", "Temperature", "temperature", "°C");
+    ha.addSensor("BMP085-1", "pressureNN", "Pressure NN", "pressure", "hPa");
+    ha.addSensor("BMP085-1", "pressure", "Pressure", "pressure", "hPa");
+    ha.addSensor("DHT22-1", "temperature", "Temperature", "temperature", "°C");
+    ha.addSensor("DHT22-1", "humidity", "Humidity", "humidity", "%");
+    ha.addSensor("TSL2561-1", "unitilluminance", "Unit-Illuminance", "", "[0..1]", "mdi:sun-wireless");
+    ha.addSensor("TSL2561-1", "illuminance", "Illuminance", "illuminance", "lx");
+    ha.addSensor("CCS811-1", "co2", "CO2", "carbon_dioxide", "ppm");
+    ha.addSensor("CCS811-1", "voc", "VOC", "volatile_organic_compounds", "ppb");
     /*int tID =*/sched.add(appLoop, "main",
                            1000000);  // every 1000000 micro sec = once a second call appLoop
 

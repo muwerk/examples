@@ -1,0 +1,15 @@
+{
+    "layout": "ii|ff",
+    "topics": [
+        "CCS811-1/sensor/co2",
+        "CCS811-1/sensor/voc",
+        "!hastates/sensor/klima_balkon_actual_temperature/state",
+        "DHT22-1/sensor/temperature"
+    ],
+    "captions": [
+        "CO2 _ppm",
+        "VOC _ppb",
+        "Balkon _C",
+        "Innen _C"
+    ]
+}

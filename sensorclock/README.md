@@ -16,6 +16,8 @@ All sensor readings are exported to Home Assistant via MQTT.
 
 An additional OLED display is used to show the current sensor readings.
 
+<img src="resources/sensorclock_breadboard.jpg">
+
 ## Customization
 
 The files `net-default.json` and `mqtt-default.json` need to be copied to `net.json` and `mqtt.json` and customized to your needs.
@@ -24,7 +26,8 @@ The file `display.json` contains the data sources for the display. Please checko
 
 ## Documentation
 
+* [Platform abstraction and ustd](https://github.com/muwerk/ustd)
 * [muwerk scheduler and messaging](https://github.com/muwerk/muwerk)
 * [munet networking and mqtt](https://github.com/muwerk/munet)
-* [documentation of hardware mupplets and supported MQTT messages](https://github.com/muwerk/mupplets)
+* documentation of hardware mupplets and MQTT messages: [mupplet-display](https://github.com/muwerk/mupplet-display), [mupplet-sensor](https://github.com/muwerk/mupplet-sensor), [mupplet-core](https://github.com/muwerk/mupplet-cor)
 * [Home Assistant's auto-discovery for MQTT](https://www.home-assistant.io/docs/mqtt/discovery/)

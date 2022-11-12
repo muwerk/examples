@@ -3,7 +3,7 @@ Butterlamp example
 
 A butterlamp made of neopixels.
 
-TBD.
+<img src="https://github.com/muwerk/examples/blob/master/butterLamp/resources/butterlamp.gif" width="60%">
 
 ## Building with platformio
 

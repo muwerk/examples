@@ -37,9 +37,9 @@ ustd::IlluminanceTSL2561 illumin("TSL2561-1", ustd::IlluminanceTSL2561::FilterMo
 ustd::TempHumDHT dht("DHT22-1", 0, 0, ustd::TempHumDHT::DHTType::DHT22);  // port 0 == D3
 ustd::PressTempBMP180 pressure("BMP085-1");
 #ifdef I2C_D1_D2
-ustd::Clock7Seg clock7("clock", 0x70, D5, true, "TSL2561-1/sensor/unitilluminance");
-ustd::Switch sw1("sensorclock1", D7);
-ustd::Switch sw2("sensorclock2", D6, ustd::Switch::Mode::Default, false, "clock/alarm/off");
+ustd::Clock7Seg clock7("clock", 0x70, 14, true, "TSL2561-1/sensor/unitilluminance");
+ustd::Switch sw1("sensorclock1", 13);
+ustd::Switch sw2("sensorclock2", 12, ustd::Switch::Mode::Default, false, "clock/alarm/off");
 ustd::GfxPanel display("display", ustd::GfxDrivers::DisplayType::SSD1306, 128, 64, 0x3c);
 #else
 ustd::Clock7Seg clock7("clock", 0x70, 14, true, "tsl2561/sensor/unitilluminance");

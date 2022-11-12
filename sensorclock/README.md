@@ -6,15 +6,19 @@ This example shows a clock with 7-segment display that contains the following se
 
 - DHT22 (temperature, humidity)
 - BMP085 (temperature, pressure, can be recplaced by BMP180)
-- CCS811 (CO2, TVOC)
+- CCS811 (CO2, TVOC) uses DHT22 for temperature and humidity calibration.
 - TSL2561 (light intensity, used to control the brightness of the display)
+- Alarm-clock buzzer and two buttons (alarm off, unused)
+
+<img src="resources/sensorclock_display.jpg" width="20%" align="right">
 
 The clock uses NTP to get the time and date. The time is displayed in 24 hour format.
 All sensor readings are exported to Home Assistant via MQTT.
 
-<img src="resources/sensorclock_display.jpg" width="20%" align="right">
 
 An additional OLED display is used to show the current sensor readings.
+
+### Breadboard layout
 
 <img src="resources/sensorclock_breadboard.jpg">
 

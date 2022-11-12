@@ -24,6 +24,10 @@ The following examples are available
 
 * [sensorclock](https://github.com/muwerk/examples/tree/master/sensorclock) A 7-segment led clock with multiple environment sensors, connected to Home-Assistant
 
+<img src="https://github.com/muwerk/examples/blob/master/butterLamp/resources/butterlamp.gif" width="30%">
+
+* [butterLamp](https://github.com/muwerk/examples/tree/master/butterLamp) An array of neopixel leds simulates an old butterlamp. The simulations includes slow extinguishing of the lamp after some hours. Flickering (wind influence) can be parametrized.
+
 ## History
 
 - **Note:** The 'old' examples folder has been moved to [Research-Examples](https://github.com/muwerk/Research-Examples), those projects are no longer maintained.

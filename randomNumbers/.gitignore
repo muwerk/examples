@@ -1,0 +1,4 @@
+.pio/
+.vscode/
+net.json
+mqtt.json

@@ -13,6 +13,8 @@ TBD.
 
 The noise generator uses an open collector reverse NPN transistor at 9V to generate a noise signal.
 
+<img src="https://github.com/muwerk/examples/blob/master/Resources/circuit_noise_generator.png" width="50%">
+
 The noise signal generated has a low amplitude of +- 100mV and homogeneous fourier spectrum.
 
 <img src="https://github.com/muwerk/examples/blob/master/Resources/Osc_RandomNoise_(N).png" width="50%">

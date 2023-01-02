@@ -10,7 +10,7 @@
 
 #include "mup_rng.h"
 
-ustd::Rng rng("rng", D2, 0);
+ustd::Rng rng("rng", 25, 0);
 
 void appLoop();
 

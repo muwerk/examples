@@ -1,0 +1,23 @@
+{
+    "layout": "SS|SS|SS|SS",
+    "topics": [
+        "clock/timeinfo",
+        "clock/timeinfo",
+        "clock/timeinfo",
+        "clock/timeinfo",
+        "clock/timeinfo",
+        "clock/timeinfo",
+        "clock/timeinfo",
+        "clock/timeinfo"
+    ],
+    "captions": [
+        "Uhrzeit",
+        "Uhrzeit",
+        "Uhrzeit",
+        "Uhrzeit",
+        "Uhrzeit",
+        "Uhrzeit",
+        "Uhrzeit",
+        "Uhrzeit"
+    ]
+}

@@ -1,0 +1,10 @@
+.pio
+.vscode/
+.cache/
+.ccls-cache/
+data/net.json
+data/mqtt.json
+data/display.json
+.DS_Store
+compile_commands.json
+

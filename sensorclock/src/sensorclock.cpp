@@ -33,7 +33,7 @@ ustd::Web web;
 ustd::HomeAssistant ha("Sensorclock", "MuWerk Intl.", "SC-Revisited", "1.1.0");
 
 ustd::I2CDoctor doctor("doctor");
-ustd::IlluminanceTSL2561 illumin("TSL2561-1", ustd::IlluminanceTSL2561::FilterMode::FAST, ustd::IlluminanceTSL2561::IntegrationMode::LONGTERM402ms, ustd::IlluminanceTSL2561::GainMode::HIGH16x);
+ustd::IlluminanceTSL2561 illumin("TSL2561-1", ustd::IlluminanceTSL2561::FilterMode::LONGTERM, ustd::IlluminanceTSL2561::IntegrationMode::LONGTERM402ms, ustd::IlluminanceTSL2561::GainMode::HIGH16x);
 ustd::TempHumDHT dht("DHT22-1", 0, 0, ustd::TempHumDHT::DHTType::DHT22);  // port 0 == D3
 ustd::PressTempBMP180 pressure("BMP085-1");
 #ifdef I2C_D1_D2
@@ -70,7 +70,7 @@ void setup() {
     clock7.begin(&sched);
     clock7.maxAlarmDuration = 10;
     // illumin.setMaxLux(200);
-    illumin.begin(&sched);
+    illumin.begin(&sched, &Wire, 10000);
     dht.begin(&sched);
     pressure.begin(&sched);
     pressure.setReferenceAltitude(518.0);  // 518m above NN, now we also receive PressureNN values for sea level.

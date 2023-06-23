@@ -211,7 +211,7 @@ void appLoop() {
         --ticker;
         if (ticker <= 0) {
             downloadAndDisplayBMP();
-            ticker = 100;
+            ticker = 600;
         }
     }
 }

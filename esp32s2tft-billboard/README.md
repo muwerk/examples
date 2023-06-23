@@ -13,13 +13,14 @@ T.B.D.
 
 * In data directory, copy `net-default.json` to `net.json`
 * Customize `net.json` and `billboard.json`
+* Customize `src/ca_root.h` and insert your own root certificate (alternatively set `"insecure_ssl": true` below).
 * Build filesystem: `pio run -t buildfs`
 * Upload filesystem: `pio run -t uploadfs`
 * Upload program code: `pio run -t upload`
 
 ## Configuration
 
-Two files need to be customized:
+Three files need to be customized:
 
 - Within the `data` directory, copy `net-default.json` to `net.json` and enter your network credentials into `net.json`.
 - Then customize the file `billboard.json`: 
@@ -34,9 +35,9 @@ Two files need to be customized:
 }
 ```
 
-The billboard esp32 will try to access a server at ```https://nalanda/ministation/10865``` using SSL. For secure SSL (default), you need to alter the file
-`ca_cert.h` and insert the root ca authority that can be used to identify your server's certificates. If you want to skip this, set `"insecure_ssl": true`,
-the certificate chain then will not be checked.
+The billboard esp32 will try to access a server at ```https://nalanda/ministation/10865``` using SSL. The validity of the server's certificates is checked with the root ca authority from `src/ca_root.h`, if not disabled (via `"insecure_ssl": true`).
+
+- For secure SSL (default), you need to alter the file `ca_cert.h` and insert the root ca authority that can be used to identify your server's certificates. If you want to skip this, set `"insecure_ssl": true`, the certificate chain then will not be checked.
 
 The url above needs to send a bitmap of size 240x135 encoded in RGB565 (16bit per pixel).
 
@@ -81,4 +82,4 @@ See the project [python_dwd_forecast](https://github.com/domschl/python-dwd-fore
 * [muwerk scheduler and messaging](https://github.com/muwerk/muwerk)
 * [munet networking and mqtt](https://github.com/muwerk/munet)
 * [documentation of hardware mupplets and supported MQTT messages](https://github.com/muwerk/mupplet-core)
-* See [DWD weather server](https://github.com/domschl/python-dwd-forecast)
+* See [DWD weather server](https://github.com/domschl/python-dwd-forecast) for a server example with secure SSL.

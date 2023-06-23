@@ -1,3 +1,5 @@
+// You need to edit this root certificate to match your server's certificates.
+
 const char *root_ca =
     "-----BEGIN CERTIFICATE-----\n"
     "MIIGQjCCBCqgAwIBAgIJAIFEuLkD4T85MA0GCSqGSIb3DQEBDQUAMHMxCzAJBgNV"

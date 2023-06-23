@@ -9,6 +9,7 @@
 #include "jsonfile.h"
 #include "net.h"
 
+// TODO: You need to edit the content of ca_cert.h and insert your own root certificate authority.
 #include "ca_cert.h"
 
 void appLoop();
@@ -31,10 +32,6 @@ String server;
 uint16_t port;
 String url;
 long refresh_interval_secs = 600;
-
-// const char *bmpUrl = "https://nalanda:8289/ministation/10865";
-// const char *server = "nalanda";
-// const char *bmpUrlNp = "https://nalanda/ministation/10865";
 
 void subsMsg(String topic, String msg, String originator) {
     if (topic == "net/network") {

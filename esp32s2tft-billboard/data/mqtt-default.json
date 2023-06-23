@@ -1,4 +1,0 @@
-{
-    "host": "my-mqtt-server-hostname",
-    "alwaysRetained": false
-}

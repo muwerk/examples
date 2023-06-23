@@ -6,7 +6,10 @@
 #include <Adafruit_ST7789.h>
 
 #include "scheduler.h"
+#include "jsonfile.h"
 #include "net.h"
+
+#include "ca_cert.h"
 
 void appLoop();
 
@@ -23,47 +26,15 @@ Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
 int ticker = 0;
 uint8_t byteBuffer[BMP_WIDTH * BMP_HEIGHT * 2];
 
-const char *bmpUrl = "https://nalanda:8289/ministation/10865";
-const char *server = "nalanda";
-const char *bmpUrlNp = "https://nalanda/ministation/10865";
+bool bInsecure = false;
+String server;
+uint16_t port;
+String url;
+long refresh_interval_secs = 600;
 
-const char *test_root_ca =
-    "-----BEGIN CERTIFICATE-----\n"
-    "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"
-    "aWcF/lcyXRdXdzh0ib2okfu9RRgpCA=="
-    "-----END CERTIFICATE-----\n";
+// const char *bmpUrl = "https://nalanda:8289/ministation/10865";
+// const char *server = "nalanda";
+// const char *bmpUrlNp = "https://nalanda/ministation/10865";
 
 void subsMsg(String topic, String msg, String originator) {
     if (topic == "net/network") {
@@ -77,9 +48,13 @@ void subsMsg(String topic, String msg, String originator) {
         String hostname = (const char *)jsonState["hostname"];
         String mac = (const char *)jsonState["mac"];
         if (state == "connected") {
+#ifdef USE_SERIAL_DBG
             Serial.println("indra: received network connect");
+#endif
             if (!bNetUp) {
+#ifdef USE_SERIAL_DBG
                 Serial.println("indra: net state online, checking indra connection...");
+#endif
                 bNetUp = true;
             }
         } else {
@@ -96,8 +71,13 @@ void setup() {
 #endif  // USE_SERIAL_DBG
 
     net.begin(&sched);
+    ustd::jsonfile jf;
+    bInsecure = jf.readBool("billboard/insecure_ssl", false);
+    server = jf.readString("billboard/server", "nalanda");
+    url = jf.readString("billboard/url", "/ministation/10865");
+    port = (uint16_t)jf.readLong("billboard/port", 8289);
+    refresh_interval_secs = jf.readLong("billboard/refresh_interval_secs", 600);
 
-    Serial.println("Starting display");
     // turn on backlite
     pinMode(TFT_BACKLITE, OUTPUT);
     digitalWrite(TFT_BACKLITE, HIGH);
@@ -118,42 +98,33 @@ void setup() {
 }
 
 void displayBMP() {
-    // Set the rotation of the display if necessary
-    // tft.setRotation(1);  // Uncomment this line for landscape orientation
-
-    // Clear the display
-    Serial.println("Clearing the display");
-    // tft.fillScreen(ST77XX_WHITE);
-    Serial.println("Display cleared");
-
     uint16_t *bmpBuffer = (uint16_t *)byteBuffer;
     // Draw the BMP image
     tft.drawRGBBitmap(0, 0, (uint16_t *)bmpBuffer, (uint16_t)BMP_WIDTH, (uint16_t)BMP_HEIGHT);
-
-    Serial.println("BMP image displayed");
 }
 
 void downloadAndDisplayBMP() {
     WiFiClientSecure client;
 
+#ifdef USE_SERIAL_DBG
     Serial.print("Connecting to ");
-    Serial.println(bmpUrl);
-    client.setCACert(test_root_ca);
+    Serial.println(server);
+#endif  // USE_SERIAL_DBG
+    client.setCACert(root_ca);
+    if (bInsecure) {
+        client.setInsecure();
+    }
     // client.setInsecure();  // skip verification
-    if (client.connect(server, 8289)) {
+    if (client.connect(server.c_str(), port)) {
+#ifdef USE_SERIAL_DBG
         Serial.println("Connected!");
-
-        // Send the HTTP GET request
-        // client.print("GET /image.bmp HTTP/1.1\r\n");
-        // client.print("Host: example.com\r\n");
-        // client.print("Connection: close\r\n\r\n");
-
+#endif  // USE_SERIAL_DBG
         // Send the HTTPS GET request
         client.print("GET ");
-        client.print("/ministation/10865");  // bmpUrl);
+        client.print(url.c_str());
         client.print(" HTTP/1.1\r\n");
         client.print("Host: ");
-        client.print("nalanda");  // Replace with the actual host name
+        client.print(server.c_str());
         client.print("\r\n");
         client.print("Connection: close\r\n\r\n");
 
@@ -170,31 +141,22 @@ void downloadAndDisplayBMP() {
                 }
             }
         }
-
+#ifdef USE_SERIAL_DBG
         Serial.println("Reading BMP image");
-
+#endif  // USE_SERIAL_DBG
         // Read the BMP data into the buffer
         uint32_t bytesRead = 0;
         while (client.connected() && bytesRead < sizeof(byteBuffer)) {
             if (client.available()) {
                 // bmpBuffer[
                 bytesRead += client.readBytes((uint8_t *)&byteBuffer[bytesRead], (size_t)(BMP_HEIGHT * BMP_WIDTH * 2 - bytesRead));
-                Serial.println("Read " + String(bytesRead) + " bytes");
             }
         }
+#ifdef USE_SERIAL_DBG
         Serial.print("BMP image read: ");
         Serial.print(bytesRead);
         Serial.println(" bytes");
-
-        // uint16_t *bmpBuffer = (uint16_t *)byteBuffer;
-        for (int i = 0; i < 20000; i++) {
-            Serial.print("0x");
-            Serial.print(byteBuffer[i]);
-            Serial.print(" ");
-            if (i % 16 == 15) {
-                Serial.println();
-            }
-        }
+#endif  // USE_SERIAL_DBG
 
         // Disconnect from the server
         client.stop();
@@ -202,7 +164,9 @@ void downloadAndDisplayBMP() {
         // Display the BMP image on the TFT display
         displayBMP();
     } else {
+#ifdef USE_SERIAL_DBG
         Serial.println("Connection failed!");
+#endif  // USE_SERIAL_DBG
     }
 }
 
@@ -211,7 +175,7 @@ void appLoop() {
         --ticker;
         if (ticker <= 0) {
             downloadAndDisplayBMP();
-            ticker = 600;
+            ticker = refresh_interval_secs;
         }
     }
 }

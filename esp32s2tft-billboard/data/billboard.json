@@ -1,0 +1,7 @@
+{
+    "server": "nalanda",
+    "port": 8289,
+    "url": "/ministation/10865",
+    "insecure_ssl": false,
+    "refresh_interval_secs": 600
+}

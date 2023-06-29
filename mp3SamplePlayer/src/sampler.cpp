@@ -15,7 +15,7 @@ ustd::Scheduler sched(10, 16, 32);
 #endif
 
 ustd::Light led1("myLed1", PA11, true);
-ustd::Light led2("myLed2", PA15, true);
+ustd::Light led2("myLed2", PC13, true);
 
 //                      RX    TX
 // HardwareSerial Serial1(10, 9);

@@ -1,5 +1,10 @@
 # examples
 
+> **Note:** The Examples-project became a bit unwieldy, it will be cleaned up in the following way _[work-in-progess!]_: This project will become just a list of available example-projects with pointers to the independent and complete single example projects
+
+
+## Old content, to be moved and reorganized:
+
 Complete examples using muwerk's [ustd](https://github.com/muwerk/ustd), [muwerk](https://github.com/muwerk/muwerk), [munet](https://github.com/muwerk/munet), and [mupplet-core](https://github.com/muwerk/mupplet-core), [mupplet-sensor](https://github.com/muwerk/mupplet-sensor), and [mupplet-display](https://github.com/muwerk/mupplet-display) libraries
 
 The following examples are available

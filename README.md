@@ -2,6 +2,7 @@
 
 > **Note:** The Examples-project became a bit unwieldy, it will be cleaned up in the following way _[work-in-progess!]_: This project will become just a list of available example-projects with pointers to the independent and complete single example projects
 
+- [example-blink](https://github.com/muwerk/example-blink). A very simple showcase for the muwerk scheduler: two leds are animated with phase- and frequency shifted wave effects. The animations run as background-task, demonstrating the modularity and ease in adding more and more `mupplet` tasks to a project without 'spaghetti-code-effects'.
 
 ## Old content, to be moved and reorganized:
 

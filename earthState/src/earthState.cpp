@@ -10,7 +10,7 @@
 
 #include "mup_rng.h"
 
-ustd::Rng rng("rng", 17, 2, ustd::Rng::IM_CHANGE, 256000);
+ustd::Rng rng("rng", 17, 2, ustd::Rng::IM_CHANGE, 16, false, 25600);
 
 void appLoop();
 
@@ -34,11 +34,13 @@ void setup() {
 
 unsigned long oldSamples = 0;
 void appLoop() {
-    if (rng.samples - oldSamples > 500) {
-        Serial.print(rng.samples);
+#ifdef USE_SERIAL_DBG
+    if (rng.getSampleCount() - oldSamples > 100000) {
+        Serial.print(rng.getSampleCount());
         Serial.print(" ");
-        oldSamples = rng.samples;
+        oldSamples = rng.getSampleCount();
     }
+#endif  // USE_SERIAL_DBG
 }
 
 // Never add code to this loop, use appLoop() instead.

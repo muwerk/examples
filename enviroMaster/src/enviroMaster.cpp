@@ -19,6 +19,7 @@
 #include "mup_presstemphum_bme280.h"
 #include "mup_switch.h"
 #include "mup_rain_ad.h"
+#include "mup_magnetic_qmc5883l.h"
 
 #ifdef USE_HOMEASSISTANT
 #include "home_assistant.h"
@@ -53,6 +54,7 @@ ustd::FrequencyCounter lightningWarning("LIGHTNING-STATIC-CHARGE", 34, 1, ustd::
 ustd::RainAD rainAD("RAIN-1", A7, 25);
 
 ustd::IlluminanceTSL2561 tsl2561("TSL2561-1", ustd::IlluminanceTSL2561::FilterMode::FAST, ustd::IlluminanceTSL2561::IntegrationMode::LONGTERM402ms, ustd::IlluminanceTSL2561::GainMode::LOW1x, 0x29);  // non-standard i2c address, adr-select low, otherwise clash with GDK101 which is on 0x39
+ustd::MagneticFieldQMC5883L magfield("MAGNETIC-1");
 
 void setup() {
 #ifdef USE_SERIAL_DBG
@@ -77,6 +79,7 @@ void setup() {
     bme280.setReferenceAltitude(518.0);      // 518m above NN, now we also receive PressureNN values for sea level.
 
     tsl2561.begin(&sched, &Wire, framesMs);  // measure every framesMs*1000 us.
+    magfield.begin(&sched, &Wire, 2000);
 
     lightningNone.begin(&sched);
     lightningActive.begin(&sched);
@@ -105,6 +108,7 @@ void setup() {
     ha.addSensor("TSL2561-1", "illuminance", "Illuminance", "illuminance", "lx");
     ha.addSensor("TSL2561-1", "unitilluminance", "Unit-Illuminance", "", "[0..1]", "mdi:sun-wireless");
     ha.addSensor("RAIN-1", "unitrain", "Unit-rain", "", "[0..1]", "mdi:weather-pouring");
+    ha.addSensor("MAGNETIC-1", "magnetic_field_strength", "Magnetic field", "", "µT", "mdi:radioactive");
     ha.addBinarySensor("RAIN-1", "rain", "Rain", "", "", "mdi:weather-pouring");
     ha.addBinarySensor("LIGHTNING-WARNING", "state", "Lightning Warning", "", "", "mdi:flash-alert");
     ha.addBinarySensor("LIGHTNING-NORMAL", "state", "Lightning no activity", "", "", "mdi:flash-alert");
